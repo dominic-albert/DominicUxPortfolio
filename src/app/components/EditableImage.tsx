@@ -47,12 +47,24 @@ export function EditableImage({
 
   return (
     <div className="relative group w-full h-full">
-      <img
-        src={currentSrc}
-        alt={alt}
-        className={className}
-        style={style}
-      />
+      {/\.(mp4|webm|ogg)$/i.test(currentSrc) ? (
+  <video
+    src={currentSrc}
+    className={className}
+    style={style}
+    autoPlay
+    loop
+    muted
+    playsInline
+  />
+) : (
+  <img
+    src={currentSrc}
+    alt={alt}
+    className={className}
+    style={style}
+  />
+)}
 
       {isEditMode && (
         <>
@@ -69,7 +81,7 @@ export function EditableImage({
           <input
             ref={fileInputRef}
             type="file"
-            accept="image/*"
+            accept="image/*,video/mp4,video/webm"
             className="hidden"
             onChange={handleFileChange}
           />

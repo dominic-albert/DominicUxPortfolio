@@ -51,25 +51,7 @@ function AppShell() {
   const [progress, setProgress] = useState(0);
   const startRef = useRef(Date.now());
   const startedRef = useRef(false);
-  useEffect(() => {
-  const GA_ID = "G-GZ7CNWJQMR";
-
-  // Load script
-  const script = document.createElement("script");
-  script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
-  script.async = true;
-  document.head.appendChild(script);
-
-  // Init script
-  const script2 = document.createElement("script");
-  script2.innerHTML = `
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', '${GA_ID}');
-  `;
-  document.head.appendChild(script2);
-}, []);
+  
   useEffect(() => {
   let link = document.querySelector(
     "link[rel*='icon']"

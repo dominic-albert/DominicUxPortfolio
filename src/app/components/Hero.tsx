@@ -6,6 +6,7 @@ import { EditableImage } from "./EditableImage";
 import { EditableText } from "./EditableText";
 import { useEdit } from "./EditContext";
 import { TiltCard } from "./TiltCard";
+import profileVideo from "../../imports/Profile.webm";
 
 const KEYWORDS = ["Clarity", "Confidence", "Growth"];
 
