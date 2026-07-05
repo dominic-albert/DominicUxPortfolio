@@ -76,8 +76,7 @@ function AppShell() {
 </defs>
 </svg>
 
-      </svg>
-    `;
+  
 
     let link = document.querySelector(
       "link[rel*='icon']"
