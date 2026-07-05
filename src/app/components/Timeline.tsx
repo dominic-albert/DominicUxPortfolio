@@ -2,7 +2,7 @@ import { useRef, useEffect, useState } from "react";
 import { motion, useInView, useScroll, useTransform } from "motion/react";
 import { TrendingUp } from "lucide-react";
 import { useEdit } from "./EditContext";
-import climbingCharacter from "../../imports/ladder_avatar-1.png";
+import climbingCharacter from "../../imports/ladder_avatar.png";
 
 function MilestoneCard({ m, i }: { m: any; i: number }) {
   const ref = useRef(null);
