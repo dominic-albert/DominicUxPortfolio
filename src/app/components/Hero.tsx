@@ -281,7 +281,7 @@ export function Hero() {
             <TiltCard className="group rounded-2xl overflow-hidden bg-secondary aspect-[3/4] liquid-glow">
               <EditableImage
                 contentKey="hero:portrait"
-                defaultSrc="https://nhacjctomeiflaqybgql.supabase.co/storage/v1/object/sign/make-80528481-portfolio/1780769031698-Profile_pic.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wZDJiMWZiNi1lYTU0LTQzMzktOGQzOS1hMmY0MzFlM2Q0ZjIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJtYWtlLTgwNTI4NDgxLXBvcnRmb2xpby8xNzgwNzY5MDMxNjk4LVByb2ZpbGVfcGljLmpwZyIsImlhdCI6MTc4MDg2MjQ4MCwiZXhwIjo0OTM0NDYyNDgwfQ.1pMb2fzL580QiocP3WUMgKp9xXqcO6P3M_lPG1Rf_94"
+                defaultSrc="src/imports/Profile.webm"
                 alt="Dominic, Senior Product Designer"
                 className="w-full h-full object-cover"
               />
