@@ -50,6 +50,47 @@ function AppShell() {
   const [progress, setProgress] = useState(0);
   const startRef = useRef(Date.now());
   const startedRef = useRef(false);
+    // Inject favicon dynamically (works with Figma Make)
+  useEffect(() => {
+    const svg = `
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+        <defs>
+          <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#A259FF"/>
+            <stop offset="100%" stop-color="#6B2FFF"/>
+          </linearGradient>
+        </defs>
+
+        <rect width="64" height="64" rx="14" fill="url(#g)"/>
+
+        <text
+          x="50%"
+          y="54%"
+          text-anchor="middle"
+          dominant-baseline="middle"
+          font-family="Inter, Arial, sans-serif"
+          font-size="42"
+          font-weight="700"
+          fill="white">
+          d
+        </text>
+      </svg>
+    `;
+
+    let link = document.querySelector(
+      "link[rel*='icon']"
+    ) as HTMLLinkElement | null;
+
+    if (!link) {
+      link = document.createElement("link");
+      link.rel = "icon";
+      document.head.appendChild(link);
+    }
+
+    link.type = "image/svg+xml";
+    link.href =
+      "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+  }, []);
 
   // Simulated ticker: crawls 0 → 75 while Supabase fetches / images load,
   // so the bar is always visibly moving from the first frame.
