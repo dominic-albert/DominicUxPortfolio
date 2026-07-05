@@ -280,10 +280,11 @@ export function Hero() {
           >
             {/* Portrait */}
             <TiltCard className="group rounded-2xl overflow-hidden bg-secondary aspect-[3/4] liquid-glow">
-              <EditableImage
-                contentKey="hero:portrait"
-                defaultSrc="src/imports/Profile.webm"
-                alt="Dominic, Senior Product Designer"
+              <video
+                src={profileVideo}
+                autoPlay
+                muted
+                playsInline
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
