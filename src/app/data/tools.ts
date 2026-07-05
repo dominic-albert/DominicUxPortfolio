@@ -1,0 +1,18 @@
+export const TOOL_DEFS = [
+  { id: "figma",      name: "Figma"       },
+  { id: "miro",       name: "Miro"        },
+  { id: "notion",     name: "Notion"      },
+  { id: "slack",      name: "Slack"       },
+  { id: "Cursor",     name: "Cursor"      },
+  { id: "Replit",     name: "Replit"      },
+  { id: "Balasamiq",  name: "Balasamiq"   },
+  { id: "Lovable",    name: "Lovable"     },
+  { id: "chatgpt",    name: "ChatGPT"     },
+  { id: "claude",     name: "Claude"      },
+  { id: "maze",       name: "Maze"        },
+  { id: "Gamma",      name: "Gamma"       },
+  { id: "github",     name: "GitHub"      },
+  { id: "Framer",     name: "Framer"      },
+  { id: "Jira",       name: "Jira"        },
+  { id: "Attention_Insight",   name: "Attention_Insight"    },
+] as const;
