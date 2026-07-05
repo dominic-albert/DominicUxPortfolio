@@ -1,6 +1,7 @@
 import "../styles/fonts.css";
 import favicon from "../imports/fav.svg";
 import { useEffect, useRef, useState } from "react";
+import { Analytics } from "@vercel/analytics/react";
 import { ThemeProvider } from "./components/ThemeContext";
 import { EditProvider } from "./components/EditContext";
 import { useEdit } from "./components/EditContext";
@@ -132,6 +133,7 @@ function AppShell() {
         <FloatingToolbar />
         <ContentManager />
         <MouseFollower />
+        <Analytics />
       </div>
     </>
   );
