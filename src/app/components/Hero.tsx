@@ -30,7 +30,16 @@ export function Hero() {
   const { theme } = useTheme();
   const { content, isEditMode } = useEdit();
   const sectionRef = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [kwIndex, setKwIndex] = useState(0);
+
+  useEffect(() => {
+  const timer = setTimeout(() => {
+    videoRef.current?.play();
+  }, 1500);
+
+  return () => clearTimeout(timer);
+}, []);
 
   useEffect(() => {
     const id = setInterval(() => setKwIndex(i => (i + 1) % KEYWORDS.length), 2800);
@@ -281,12 +290,13 @@ export function Hero() {
             {/* Portrait */}
             <TiltCard className="group rounded-2xl overflow-hidden bg-secondary aspect-[3/4] liquid-glow">
               <video
-                src={profileVideo}
-                autoPlay
-                muted
-                playsInline
-                className="w-full h-full object-cover"
-              />
+  ref={videoRef}
+  src={profileVideo}
+  muted
+  playsInline
+  preload="auto"
+  className="w-full h-full object-cover"
+/>
               <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
               <motion.div
                 className="absolute bottom-5 left-5 px-3 py-1.5 rounded-full bg-background/90 backdrop-blur border border-border"
