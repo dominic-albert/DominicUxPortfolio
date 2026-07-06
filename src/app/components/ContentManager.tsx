@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useEdit } from "./EditContext";
-import { Plus, Edit2, Trash2, GripVertical, X, Save, Briefcase, User, Link2, Image as ImageIcon, Wrench, Settings2, MousePointer2 } from "lucide-react";
-import { TOOL_DEFS } from "../data/tools";
+import { Plus, Edit2, Trash2, GripVertical, X, Save, Briefcase, User, Link2, Image as ImageIcon, Settings2, MousePointer2 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
 interface Project {
@@ -580,8 +579,7 @@ function LogoEditorModal({ logo, isOpen, onClose, onSave }: any) {
 // Main Content Manager Component
 export function ContentManager() {
   const { isEditMode, projects, updateProjects, content, updateContent, uploadImage } = useEdit();
-  const [uploadingToolId, setUploadingToolId] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<"projects" | "career" | "logos" | "contact" | "tools" | "settings">("projects");
+  const [activeTab, setActiveTab] = useState<"projects" | "career" | "logos" | "contact" | "settings">("projects");
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   // Projects state
@@ -787,13 +785,7 @@ export function ContentManager() {
                 <Link2 size={16} />
                 Contact
               </button>
-              <button
-                onClick={() => setActiveTab("tools")}
-                className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === "tools" ? "bg-accent text-white" : "hover:bg-secondary"}`}
-              >
-                <Wrench size={16} />
-                Tools
-              </button>
+
               <button
                 onClick={() => setActiveTab("settings")}
                 className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === "settings" ? "bg-accent text-white" : "hover:bg-secondary"}`}
@@ -975,75 +967,6 @@ export function ContentManager() {
                 </div>
               )}
 
-              {/* Tools Tab */}
-              {activeTab === "tools" && (
-                <div className="space-y-3">
-                  <p className="text-xs text-muted-foreground pb-1">
-                    Upload an image to replace a tool logo. Click the reset button to restore the default icon.
-                  </p>
-                  {TOOL_DEFS.map(({ id, name }) => {
-                    const toolUrls: Record<string, string> = content.toolUrls || {};
-                    const currentUrl = toolUrls[id] || "";
-                    const isUploading = uploadingToolId === id;
-                    return (
-                      <div key={id} className="flex items-center gap-3 p-3 bg-secondary rounded-lg border border-border">
-                        {/* Preview */}
-                        <div className="w-9 h-9 rounded-lg bg-background border border-border flex items-center justify-center shrink-0 overflow-hidden">
-                          {currentUrl
-                            ? <img src={currentUrl} alt={name} className="w-full h-full object-contain" />
-                            : <span className="text-[9px] text-muted-foreground font-mono">{name.slice(0, 3).toUpperCase()}</span>
-                          }
-                        </div>
-
-                        {/* Name */}
-                        <span className="flex-1 text-sm font-medium truncate">{name}</span>
-
-                        {/* Upload button */}
-                        <label className={`cursor-pointer flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${isUploading ? "opacity-50 pointer-events-none" : "bg-accent/10 hover:bg-accent/20 text-accent"}`}>
-                          <ImageIcon size={13} />
-                          {isUploading ? "Uploading…" : "Upload"}
-                          <input
-                            type="file"
-                            accept="image/*"
-                            className="sr-only"
-                            disabled={isUploading}
-                            onChange={async (e) => {
-                              const file = e.target.files?.[0];
-                              if (!file) return;
-                              try {
-                                setUploadingToolId(id);
-                                const url = await uploadImage(file);
-                                const updated = { ...toolUrls, [id]: url };
-                                updateContent("toolUrls", updated);
-                              } catch (err) {
-                                console.error("Tool logo upload failed:", err);
-                              } finally {
-                                setUploadingToolId(null);
-                                e.target.value = "";
-                              }
-                            }}
-                          />
-                        </label>
-
-                        {/* Reset */}
-                        {currentUrl && (
-                          <button
-                            onClick={() => {
-                              const updated = { ...toolUrls };
-                              delete updated[id];
-                              updateContent("toolUrls", updated);
-                            }}
-                            className="p-1.5 hover:text-red-500 transition-colors text-muted-foreground"
-                            title="Reset to default icon"
-                          >
-                            <X size={13} />
-                          </button>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
 
               {/* Settings Tab */}
               {activeTab === "settings" && (
