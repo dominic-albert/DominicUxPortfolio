@@ -36,7 +36,7 @@ export function Hero() {
   useEffect(() => {
   const timer = setTimeout(() => {
     videoRef.current?.play();
-  }, 1500);
+  }, 3000);
 
   return () => clearTimeout(timer);
 }, []);
