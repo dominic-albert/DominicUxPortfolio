@@ -1,15 +1,5 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  useRef,
-  ReactNode,
-} from "react";
-import {
-  projectId,
-  publicAnonKey,
-} from "/utils/supabase/info.tsx";
+import { createContext, useContext, useState, useEffect, useRef, ReactNode } from "react";
+import { projectId, publicAnonKey } from "/utils/supabase/info.tsx";
 
 interface EditContextType {
   isEditMode: boolean;
@@ -26,19 +16,15 @@ interface EditContextType {
   hasUnsavedChanges: boolean;
 }
 
-const EditContext = createContext<EditContextType | undefined>(
-  undefined,
-);
+const EditContext = createContext<EditContextType | undefined>(undefined);
 
 const defaultProjects = [
   {
     id: "1",
     title: "Patient Journey Redesign",
-    description:
-      "Redesigned the end-to-end patient scheduling experience for a 40-hospital network, reducing friction at every touchpoint and improving accessibility compliance to WCAG 2.1 AA.",
+    description: "Redesigned the end-to-end patient scheduling experience for a 40-hospital network, reducing friction at every touchpoint and improving accessibility compliance to WCAG 2.1 AA.",
     tags: ["Healthcare", "Lead UX Designer"],
-    thumbnail:
-      "https://images.unsplash.com/photo-1777503810475-54815aae2cb4?w=900&h=600&fit=crop&auto=format",
+    thumbnail: "https://images.unsplash.com/photo-1777503810475-54815aae2cb4?w=900&h=600&fit=crop&auto=format",
     caseStudyLink: "#",
     featured: true,
     outcome: "62% reduction in appointment drop-off",
@@ -47,11 +33,9 @@ const defaultProjects = [
   {
     id: "2",
     title: "Wealth Management Platform",
-    description:
-      "Designed a complex wealth management dashboard for institutional clients, distilling real-time portfolio data into actionable clarity.",
+    description: "Designed a complex wealth management dashboard for institutional clients, distilling real-time portfolio data into actionable clarity.",
     tags: ["FinTech", "Senior Product Designer"],
-    thumbnail:
-      "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&h=540&fit=crop&auto=format",
+    thumbnail: "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&h=540&fit=crop&auto=format",
     caseStudyLink: "#",
     featured: true,
     outcome: "$2.1B AUM migrated with 94% retention",
@@ -135,13 +119,7 @@ const defaultCollagePhotos = [
   },
 ];
 
-function PasswordModal({
-  onConfirm,
-  onCancel,
-}: {
-  onConfirm: () => void;
-  onCancel: () => void;
-}) {
+function PasswordModal({ onConfirm, onCancel }: { onConfirm: () => void; onCancel: () => void }) {
   const [value, setValue] = useState("");
   const [error, setError] = useState(false);
 
@@ -155,47 +133,19 @@ function PasswordModal({
   };
 
   return (
-    <div
-      className="fixed inset-0 z-[99999] flex items-center justify-center p-4"
-      style={{
-        background: "rgba(0,0,0,0.55)",
-        backdropFilter: "blur(6px)",
-      }}
-    >
+    <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4" style={{ background: "rgba(0,0,0,0.55)", backdropFilter: "blur(6px)" }}>
       <div
         onClick={(e) => e.stopPropagation()}
         className="w-full max-w-sm rounded-2xl border p-8 shadow-2xl"
-        style={{
-          background: "var(--card)",
-          borderColor: "var(--border)",
-        }}
+        style={{ background: "var(--card)", borderColor: "var(--border)" }}
       >
-        <p
-          className="text-[15px] font-semibold mb-1"
-          style={{
-            fontFamily: "Fraunces, serif",
-            color: "var(--foreground)",
-          }}
-        >
-          Enter edit mode
-        </p>
-        <p
-          className="text-[13px] mb-5"
-          style={{
-            fontFamily: "Plus Jakarta Sans, sans-serif",
-            color: "var(--muted-foreground)",
-          }}
-        >
-          Password required to access the content manager.
-        </p>
+        <p className="text-[15px] font-semibold mb-1" style={{ fontFamily: "Fraunces, serif", color: "var(--foreground)" }}>Enter edit mode</p>
+        <p className="text-[13px] mb-5" style={{ fontFamily: "Plus Jakarta Sans, sans-serif", color: "var(--muted-foreground)" }}>Password required to access the content manager.</p>
         <input
           autoFocus
           type="password"
           value={value}
-          onChange={(e) => {
-            setValue(e.target.value);
-            setError(false);
-          }}
+          onChange={(e) => { setValue(e.target.value); setError(false); }}
           onKeyDown={(e) => e.key === "Enter" && submit()}
           placeholder="Password"
           className="w-full px-4 py-3 rounded-xl border text-[14px] outline-none mb-1"
@@ -206,35 +156,19 @@ function PasswordModal({
             fontFamily: "Plus Jakarta Sans, sans-serif",
           }}
         />
-        {error && (
-          <p
-            className="text-[12px] text-red-400 mb-3"
-            style={{
-              fontFamily: "Plus Jakarta Sans, sans-serif",
-            }}
-          >
-            Incorrect password.
-          </p>
-        )}
+        {error && <p className="text-[12px] text-red-400 mb-3" style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}>Incorrect password.</p>}
         <div className="flex gap-3 mt-4">
           <button
             onClick={onCancel}
             className="flex-1 px-4 py-2.5 rounded-xl border text-[13px] transition-colors"
-            style={{
-              borderColor: "var(--border)",
-              color: "var(--muted-foreground)",
-              fontFamily: "Plus Jakarta Sans, sans-serif",
-            }}
+            style={{ borderColor: "var(--border)", color: "var(--muted-foreground)", fontFamily: "Plus Jakarta Sans, sans-serif" }}
           >
             Cancel
           </button>
           <button
             onClick={submit}
             className="flex-1 px-4 py-2.5 rounded-xl text-[13px] font-medium text-white transition-opacity hover:opacity-90"
-            style={{
-              background: "var(--accent)",
-              fontFamily: "Plus Jakarta Sans, sans-serif",
-            }}
+            style={{ background: "var(--accent)", fontFamily: "Plus Jakarta Sans, sans-serif" }}
           >
             Unlock
           </button>
@@ -244,59 +178,27 @@ function PasswordModal({
   );
 }
 
-function ConfirmModal({
-  message,
-  onConfirm,
-  onCancel,
-}: {
-  message: string;
-  onConfirm: () => void;
-  onCancel: () => void;
-}) {
+function ConfirmModal({ message, onConfirm, onCancel }: { message: string; onConfirm: () => void; onCancel: () => void }) {
   return (
-    <div
-      className="fixed inset-0 z-[99999] flex items-center justify-center p-4"
-      style={{
-        background: "rgba(0,0,0,0.55)",
-        backdropFilter: "blur(6px)",
-      }}
-    >
+    <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4" style={{ background: "rgba(0,0,0,0.55)", backdropFilter: "blur(6px)" }}>
       <div
         onClick={(e) => e.stopPropagation()}
         className="w-full max-w-sm rounded-2xl border p-8 shadow-2xl"
-        style={{
-          background: "var(--card)",
-          borderColor: "var(--border)",
-        }}
+        style={{ background: "var(--card)", borderColor: "var(--border)" }}
       >
-        <p
-          className="text-[14px] mb-6"
-          style={{
-            fontFamily: "Plus Jakarta Sans, sans-serif",
-            color: "var(--foreground)",
-          }}
-        >
-          {message}
-        </p>
+        <p className="text-[14px] mb-6" style={{ fontFamily: "Plus Jakarta Sans, sans-serif", color: "var(--foreground)" }}>{message}</p>
         <div className="flex gap-3">
           <button
             onClick={onCancel}
             className="flex-1 px-4 py-2.5 rounded-xl border text-[13px] transition-colors"
-            style={{
-              borderColor: "var(--border)",
-              color: "var(--muted-foreground)",
-              fontFamily: "Plus Jakarta Sans, sans-serif",
-            }}
+            style={{ borderColor: "var(--border)", color: "var(--muted-foreground)", fontFamily: "Plus Jakarta Sans, sans-serif" }}
           >
             Stay in edit mode
           </button>
           <button
             onClick={onConfirm}
             className="flex-1 px-4 py-2.5 rounded-xl text-[13px] font-medium text-white transition-opacity hover:opacity-90"
-            style={{
-              background: "#ef4444",
-              fontFamily: "Plus Jakarta Sans, sans-serif",
-            }}
+            style={{ background: "#ef4444", fontFamily: "Plus Jakarta Sans, sans-serif" }}
           >
             Exit anyway
           </button>
@@ -306,15 +208,10 @@ function ConfirmModal({
   );
 }
 
-export function EditProvider({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export function EditProvider({ children }: { children: ReactNode }) {
   const [isEditMode, setIsEditMode] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [showPasswordModal, setShowPasswordModal] =
-    useState(false);
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [showExitConfirm, setShowExitConfirm] = useState(false);
   const [content, setContent] = useState<Record<string, any>>({
     careers: [],
@@ -327,11 +224,8 @@ export function EditProvider({
     },
   });
   const [projects, setProjects] = useState<any[]>([]);
-  const [sections, setSections] = useState<
-    Record<string, boolean>
-  >({});
-  const [hasUnsavedChanges, setHasUnsavedChanges] =
-    useState(false);
+  const [sections, setSections] = useState<Record<string, boolean>>({});
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const hasLoadedContent = useRef(false);
   const saveTimerRef = useRef<number | null>(null);
   const saveRevisionRef = useRef(0);
@@ -348,42 +242,30 @@ export function EditProvider({
     try {
       const response = await fetch(`${serverUrl}/content`, {
         headers: {
-          Authorization: `Bearer ${publicAnonKey}`,
+          "Authorization": `Bearer ${publicAnonKey}`,
         },
       });
 
       if (!response.ok) {
         const data = await response.json().catch(() => ({}));
-        throw new Error(
-          data.error ||
-            `Failed to load content: ${response.status}`,
-        );
+        throw new Error(data.error || `Failed to load content: ${response.status}`);
       }
 
       const data = await response.json();
       const loadedContent = data.content || {};
 
       // Set careers from content or use defaults
-      if (
-        !loadedContent.careers ||
-        loadedContent.careers.length === 0
-      ) {
+      if (!loadedContent.careers || loadedContent.careers.length === 0) {
         loadedContent.careers = defaultCareers;
       }
 
       // Set logos from content or use defaults
-      if (
-        !loadedContent.logos ||
-        loadedContent.logos.length === 0
-      ) {
+      if (!loadedContent.logos || loadedContent.logos.length === 0) {
         loadedContent.logos = defaultLogos;
       }
 
       // Set collage photos from content or use defaults
-      if (
-        !loadedContent.collagePhotos ||
-        loadedContent.collagePhotos.length === 0
-      ) {
+      if (!loadedContent.collagePhotos || loadedContent.collagePhotos.length === 0) {
         loadedContent.collagePhotos = defaultCollagePhotos;
       }
 
@@ -397,11 +279,7 @@ export function EditProvider({
       }
 
       setContent(loadedContent);
-      setProjects(
-        data.projects && data.projects.length > 0
-          ? data.projects
-          : defaultProjects,
-      );
+      setProjects(data.projects && data.projects.length > 0 ? data.projects : defaultProjects);
       setSections(data.sections || {});
       setHasUnsavedChanges(false);
       hasLoadedContent.current = true;
@@ -412,23 +290,15 @@ export function EditProvider({
       // before giving up so a transient blip doesn't fall back to defaults.
       if (attempt < MAX_ATTEMPTS - 1) {
         const delay = 600 * 2 ** attempt; // 600ms → 1.2s → 2.4s
-        const message =
-          error instanceof Error
-            ? error.message
-            : String(error);
+        const message = error instanceof Error ? error.message : String(error);
         console.warn(
           `Content load attempt ${attempt + 1}/${MAX_ATTEMPTS} failed (${message}); retrying in ${delay}ms`,
         );
-        await new Promise((resolve) =>
-          setTimeout(resolve, delay),
-        );
+        await new Promise((resolve) => setTimeout(resolve, delay));
         return loadContent(attempt + 1);
       }
 
-      console.error(
-        "Error loading content after retries:",
-        error,
-      );
+      console.error("Error loading content after retries:", error);
       // Show defaults so the site is still usable, but do NOT mark content as loaded.
       // Leaving hasLoadedContent false keeps autosave disabled, so we never overwrite the
       // real (and possibly populated) server content with these local defaults.
@@ -471,9 +341,7 @@ export function EditProvider({
     setHasUnsavedChanges(true);
   };
 
-  const updateSections = (
-    newSections: Record<string, boolean>,
-  ) => {
+  const updateSections = (newSections: Record<string, boolean>) => {
     saveRevisionRef.current += 1;
     setSections(newSections);
     setHasUnsavedChanges(true);
@@ -492,7 +360,7 @@ export function EditProvider({
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${publicAnonKey}`,
+          "Authorization": `Bearer ${publicAnonKey}`,
         },
         body: JSON.stringify({ content, projects, sections }),
       });
@@ -512,26 +380,6 @@ export function EditProvider({
   };
 
   // Live-site edits should persist without relying on the user noticing the toolbar.
-  // After the initial Supabase load, every edit is autosaved with a short debounce.
-  useEffect(() => {
-    if (!hasLoadedContent.current || !hasUnsavedChanges) return;
-
-    if (saveTimerRef.current) {
-      window.clearTimeout(saveTimerRef.current);
-    }
-
-    saveTimerRef.current = window.setTimeout(() => {
-      saveChanges().catch((error) => {
-        console.error("Autosave failed:", error);
-      });
-    }, 1200);
-
-    return () => {
-      if (saveTimerRef.current) {
-        window.clearTimeout(saveTimerRef.current);
-      }
-    };
-  }, [content, projects, sections, hasUnsavedChanges]);
 
   useEffect(() => {
     const warnBeforeLeaving = (event: BeforeUnloadEvent) => {
@@ -541,11 +389,7 @@ export function EditProvider({
     };
 
     window.addEventListener("beforeunload", warnBeforeLeaving);
-    return () =>
-      window.removeEventListener(
-        "beforeunload",
-        warnBeforeLeaving,
-      );
+    return () => window.removeEventListener("beforeunload", warnBeforeLeaving);
   }, [hasUnsavedChanges]);
 
   // Convert uploaded files to compressed base64 data URLs entirely client-side.
@@ -554,18 +398,13 @@ export function EditProvider({
   const uploadImage = (file: File): Promise<string> =>
     new Promise((resolve, reject) => {
       const reader = new FileReader();
-      reader.onerror = () =>
-        reject(new Error("Failed to read file"));
+      reader.onerror = () => reject(new Error("Failed to read file"));
       reader.onload = () => {
         const img = new Image();
-        img.onerror = () =>
-          reject(new Error("Failed to decode image"));
+        img.onerror = () => reject(new Error("Failed to decode image"));
         img.onload = () => {
           const MAX = 1400;
-          const scale = Math.min(
-            1,
-            MAX / Math.max(img.width, img.height),
-          );
+          const scale = Math.min(1, MAX / Math.max(img.width, img.height));
           const canvas = document.createElement("canvas");
           canvas.width = Math.round(img.width * scale);
           canvas.height = Math.round(img.height * scale);
@@ -598,20 +437,14 @@ export function EditProvider({
       {children}
       {showPasswordModal && (
         <PasswordModal
-          onConfirm={() => {
-            setShowPasswordModal(false);
-            setIsEditMode(true);
-          }}
+          onConfirm={() => { setShowPasswordModal(false); setIsEditMode(true); }}
           onCancel={() => setShowPasswordModal(false)}
         />
       )}
       {showExitConfirm && (
         <ConfirmModal
           message="You have unsaved changes. Exit edit mode anyway?"
-          onConfirm={() => {
-            setShowExitConfirm(false);
-            setIsEditMode(false);
-          }}
+          onConfirm={() => { setShowExitConfirm(false); setIsEditMode(false); }}
           onCancel={() => setShowExitConfirm(false)}
         />
       )}
@@ -622,12 +455,7 @@ export function EditProvider({
 const editFallback: EditContextType = {
   isEditMode: false,
   isLoading: false,
-  content: {
-    careers: [],
-    logos: [],
-    collagePhotos: [],
-    contactInfo: { email: "", linkedin: "", resumeLink: "" },
-  },
+  content: { careers: [], logos: [], collagePhotos: [], contactInfo: { email: "", linkedin: "", resumeLink: "" } },
   projects: [],
   sections: {},
   toggleEditMode: () => {},
