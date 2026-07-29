@@ -22,7 +22,7 @@ import { MouseFollower } from "./components/MouseFollower";
 import { InsideTheDesignMind } from "./components/InsideTheDesignMind";
 import { TreatDispenser } from "./components/TreatDispenser";
 
-const MIN_DISPLAY_MS = 1800;
+const MIN_DISPLAY_MS = 600;
 
 function preloadImages(urls: string[], onProgress: (pct: number) => void): Promise<void> {
   const valid = urls.filter(Boolean);
@@ -91,15 +91,13 @@ function AppShell() {
       ...(content.collagePhotos ?? []).map((p: any) => p.src),
     ];
 
-    preloadImages(urls, pct => {
-      // Map image progress (0–100) into the remaining 75–100 range
-      setProgress(75 + Math.round(pct * 0.25));
-    }).then(() => {
-      setProgress(100);
-      const elapsed = Date.now() - startRef.current;
-      const wait = Math.max(0, MIN_DISPLAY_MS - elapsed);
-      setTimeout(() => setPreloaderVisible(false), wait);
-    });
+    // Fire-and-forget image preload — don't gate the page on it
+    preloadImages(urls, () => {});
+
+    setProgress(100);
+    const elapsed = Date.now() - startRef.current;
+    const wait = Math.max(0, MIN_DISPLAY_MS - elapsed);
+    setTimeout(() => setPreloaderVisible(false), wait);
   }, [isLoading]);
 
   return (
