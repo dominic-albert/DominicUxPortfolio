@@ -22,7 +22,7 @@ import { MouseFollower } from "./components/MouseFollower";
 import { InsideTheDesignMind } from "./components/InsideTheDesignMind";
 import { TreatDispenser } from "./components/TreatDispenser";
 
-const MIN_DISPLAY_MS = 600;
+const MIN_DISPLAY_MS = 300;
 
 function preloadImages(urls: string[], onProgress: (pct: number) => void): Promise<void> {
   const valid = urls.filter(Boolean);
