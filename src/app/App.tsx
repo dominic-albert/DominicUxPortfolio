@@ -1,6 +1,6 @@
 import "../styles/fonts.css";
 import favicon from "../imports/fav.svg";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { ThemeProvider } from "./components/ThemeContext";
 import { EditProvider } from "./components/EditContext";
 import { useEdit } from "./components/EditContext";
@@ -22,35 +22,12 @@ import { MouseFollower } from "./components/MouseFollower";
 import { InsideTheDesignMind } from "./components/InsideTheDesignMind";
 import { TreatDispenser } from "./components/TreatDispenser";
 
-const MIN_DISPLAY_MS = 300;
-
-function preloadImages(urls: string[], onProgress: (pct: number) => void): Promise<void> {
-  const valid = urls.filter(Boolean);
-  if (valid.length === 0) { onProgress(100); return Promise.resolve(); }
-  let done = 0;
-  return Promise.all(
-    valid.map(
-      url =>
-        new Promise<void>(resolve => {
-          const img = new window.Image();
-          img.onload = img.onerror = () => {
-            done++;
-            onProgress(Math.round((done / valid.length) * 100));
-            resolve();
-          };
-          img.src = url;
-        })
-    )
-  ).then(() => {});
-}
+const LOADER_DURATION_MS = 2000;
 
 /* Lives inside EditProvider so it can read context */
 function AppShell() {
-  const { projects, content, isLoading } = useEdit();
   const [preloaderVisible, setPreloaderVisible] = useState(true);
   const [progress, setProgress] = useState(0);
-  const startRef = useRef(Date.now());
-  const startedRef = useRef(false);
   
   useEffect(() => {
   let link = document.querySelector(
@@ -69,36 +46,22 @@ function AppShell() {
 
   
 
-  // Simulated ticker: crawls 0 → 75 while Supabase fetches / images load,
-  // so the bar is always visibly moving from the first frame.
+  // Animate progress 0→100 over exactly 2s, then wait 0.5s, then show page.
   useEffect(() => {
+    const start = Date.now();
+    let done = false;
     const tick = setInterval(() => {
-      setProgress(p => {
-        if (p >= 75) { clearInterval(tick); return p; }
-        // Slow down as it approaches 75 (eases naturally)
-        return p + Math.max(0.4, (75 - p) * 0.045);
-      });
-    }, 80);
+      const elapsed = Date.now() - start;
+      const pct = Math.min(100, Math.floor((elapsed / LOADER_DURATION_MS) * 100));
+      setProgress(pct);
+      if (pct >= 100 && !done) {
+        done = true;
+        clearInterval(tick);
+        setTimeout(() => setPreloaderVisible(false), 500);
+      }
+    }, 16);
     return () => clearInterval(tick);
   }, []);
-
-  useEffect(() => {
-    if (isLoading || startedRef.current) return;
-    startedRef.current = true;
-
-    const urls: string[] = [
-      ...projects.map((p: any) => p.thumbnail),
-      ...(content.collagePhotos ?? []).map((p: any) => p.src),
-    ];
-
-    // Fire-and-forget image preload — don't gate the page on it
-    preloadImages(urls, () => {});
-
-    setProgress(100);
-    const elapsed = Date.now() - startRef.current;
-    const wait = Math.max(0, MIN_DISPLAY_MS - elapsed);
-    setTimeout(() => setPreloaderVisible(false), wait);
-  }, [isLoading]);
 
   return (
     <>

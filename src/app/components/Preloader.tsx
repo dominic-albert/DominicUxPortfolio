@@ -129,9 +129,9 @@ export function Preloader({ progress, visible }: Props) {
 
             {/* Progress bar */}
             <motion.div
-              initial={{ opacity: 0, scaleX: 0 }}
-              animate={{ opacity: 1, scaleX: 1 }}
-              transition={{ delay: 0.65, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.1, duration: 0.2 }}
               style={{ width: 220, height: 1, background: "rgba(255,255,255,0.07)", borderRadius: 1, marginTop: 32, position: "relative", overflow: "hidden" }}
             >
               <motion.div
@@ -157,7 +157,7 @@ export function Preloader({ progress, visible }: Props) {
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.8, duration: 0.5 }}
+              transition={{ delay: 0.1, duration: 0.2 }}
               style={{
                 fontFamily: "Plus Jakarta Sans, sans-serif",
                 fontSize: 11,
