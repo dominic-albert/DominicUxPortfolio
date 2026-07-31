@@ -1,0 +1,772 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>     Meds Reminder : UX Case Study</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+/* For default-background callouts, render the border outline. */
+.callout.block-color-default_background {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+figure,
+aside,
+details {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding-inline: 0.125rem;
+	padding-block: 0.375rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+/*
+ * Render emoji icons using a ::before pseudo-element to keep the glyph
+ * out of the DOM textContent traversal. This avoids double-rendering icons
+ * in callouts and page titles.
+ * NOTE(slim/html-export-pseudo-icons): I can't tagref this because it will
+ * flag as a duplicate tag after codegen.
+ */
+.icon[data-emoji]::before {
+	content: attr(data-emoji);
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	margin-right: 0.4em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.tab {
+	margin: 1.25em 0;
+	padding-inline: 1rem;
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style></head><body><article id="375fef90-89b9-81c1-b851-c68529b8af92" class="page serif"><header><h1 class="page-title" dir="auto">     Meds Reminder : UX Case Study</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody></tbody></table></header><div class="page-body"><figure id="3a0fef90-89b9-808f-91b9-d5f518c2ebe8" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/783315c2-89aa-4f1d-8e5d-84e44c918d9e.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/783315c2-89aa-4f1d-8e5d-84e44c918d9e.png"><img style="width:816px" src="Meds%20Reminder%20UX%20Case%20Study/783315c2-89aa-4f1d-8e5d-84e44c918d9e.png"/></a></figure><p id="375fef90-89b9-813c-bf89-c8c1f7902a95" class="" dir="auto"><br/>Improving medication adherence through user-centered design. A UX case study detailing the design and development of a medication reminder feature with in &quot;Patient app&quot;.</p><h2 id="375fef90-89b9-81d3-9172-cacd6fe17298" class="" dir="auto">PROJECT DETAILS</h2><table id="38dfef90-89b9-8010-b481-dc7adce848c4" class="simple-table" dir="ltr"><thead class="simple-table-header"><tr id="38dfef90-89b9-8059-bf76-d37443dad214" dir="ltr"><th id="yv=s" class="simple-table-header-color simple-table-header" style="width:182px"><strong>Category</strong></th><th id="lrac" class="simple-table-header-color simple-table-header" style="width:531px"><strong>Details</strong></th></tr></thead><tbody><tr id="38dfef90-89b9-80a7-87ac-e98f7e872668" dir="ltr"><td id="yv=s" class="" style="width:182px"><strong>Client</strong></td><td id="lrac" class="" style="width:531px">Medication Reminder</td></tr><tr id="38dfef90-89b9-80fd-a55c-e0d62ba40013" dir="ltr"><td id="yv=s" class="" style="width:182px"><strong>My Role</strong></td><td id="lrac" class="" style="width:531px">Product Designer</td></tr><tr id="38dfef90-89b9-8047-b467-f660b7d2aef3" dir="ltr"><td id="yv=s" class="" style="width:182px"><strong>Industry</strong></td><td id="lrac" class="" style="width:531px">Healthcare</td></tr><tr id="38dfef90-89b9-80ab-8b53-d43f6de9d92d" dir="ltr"><td id="yv=s" class="" style="width:182px"><strong>Platform</strong></td><td id="lrac" class="" style="width:531px">Android &amp; iOS</td></tr><tr id="38dfef90-89b9-80de-9614-e3646fc9baea" dir="ltr"><td id="yv=s" class="" style="width:182px"><strong>Duration</strong></td><td id="lrac" class="" style="width:531px">3 Months</td></tr><tr id="38dfef90-89b9-804f-a1f4-fce1e78c62aa" dir="ltr"><td id="yv=s" class="" style="width:182px"><strong>Team</strong></td><td id="lrac" class="" style="width:531px">3 Members (Product Designer, Product Owner, Researcher) + 4 Developers</td></tr><tr id="38dfef90-89b9-80e4-b352-f1377351928f" dir="ltr"><td id="yv=s" class="" style="width:182px"><strong>Design &amp; Prototyping</strong></td><td id="lrac" class="" style="width:531px">Figma, FigJam, UserTesting</td></tr><tr id="38dfef90-89b9-8006-9a7b-dafaf14165d1" dir="ltr"><td id="yv=s" class="" style="width:182px"><strong>Research &amp; Analytics</strong></td><td id="lrac" class="" style="width:531px">Google Analytics, Dovetail, PowerPoint</td></tr><tr id="38dfef90-89b9-8038-9d81-e78bd08e9ab6" dir="ltr"><td id="yv=s" class="" style="width:182px"><strong>Impact</strong></td><td id="lrac" class="" style="width:531px">• Increased medication adherence among target users.<br/>• Enhanced user experience through research-driven design decisions.</td></tr></tbody></table><h1 id="3a0fef90-89b9-8071-b468-dd3016502d20" class="" dir="auto">About “Patient Access” app</h1><aside class="block-color-default_background callout" data-notion-callout="" data-notion-callout-background="default_background" style="white-space:pre-wrap;display:flex" id="3a0fef90-89b9-8093-b6b5-f2660dd29cfb" dir="ltr"><div style="width:100%"><p id="3a0fef90-89b9-80f6-8fab-f18dd896477e" class="" dir="auto"><strong>Patient Access </strong>connects you to local health services when you need them most. Book GP appointments, order repeat prescriptions and discover local health services for you or your family via your mobile or home computer.</p><p id="3a0fef90-89b9-80cf-a10d-c75016e9ddd3" class="" dir="auto"><em><strong><span style="border-bottom:0.05em solid">Patient Access has 10 million : registered users</span></strong></em></p><p id="3a0fef90-89b9-8056-9b3d-cb6b58b40e1d" class="block-color-blue" data-notion-highlight="blue" dir="auto"><a href="https://apps.apple.com/gb/app/patient-access/id612905214">App Store link</a></p><figure id="3a0fef90-89b9-8053-b3b9-e13a0eaf5b2c" class="image" style="text-align:center" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/image.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/image.png"><img style="width:576px" src="Meds%20Reminder%20UX%20Case%20Study/image.png"/></a></figure></div></aside><h1 id="375fef90-89b9-81d4-9282-cd9e7b8719c6" class="" dir="auto"><em><strong>Why &quot;Medications Reminder 💊&quot; ?</strong></em></h1><aside class="block-color-default_background callout" data-notion-callout="" data-notion-callout-background="default_background" style="white-space:pre-wrap;display:flex" id="39ffef90-89b9-80e9-9cd1-f7b3427a1d02" dir="ltr"><div style="width:100%"><h3 id="375fef90-89b9-81b5-b615-d61f5e3e2587" class="" dir="auto">User Feedback Review Exercise</h3><p id="375fef90-89b9-812c-b41f-da5894588473" class="" dir="auto">To enhance user experience and address <strong>evolving needs</strong>, we conducted a structured feedback review using <strong>Dovetail</strong> to analyze user requests and pain points. A key pattern emerged—many users expressed the <strong>need for a medication reminder system</strong> to help them stay consistent with their prescriptions.</p><figure id="389fef90-89b9-80ce-82d9-ce61372d51e8" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/b9c3764f-5b81-4532-9bdd-917207e8270d.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/b9c3764f-5b81-4532-9bdd-917207e8270d.png"><img style="width:624px" src="Meds%20Reminder%20UX%20Case%20Study/b9c3764f-5b81-4532-9bdd-917207e8270d.png"/></a></figure></div></aside><p id="375fef90-89b9-81d8-81c1-ed8658acb865" class="" dir="auto">‎ ‎‎‎</p><figure id="389fef90-89b9-808b-884e-c1ad29b40da0" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/image%201.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/image%201.png"><img style="width:9009px" src="Meds%20Reminder%20UX%20Case%20Study/image%201.png"/></a></figure><h2 id="375fef90-89b9-8151-bbe5-f891ccd870bd" class="" dir="auto">Design Process : PXD (Product eXperience Design)</h2><aside class="block-color-default_background callout" data-notion-callout="" data-notion-callout-background="default_background" style="white-space:pre-wrap;display:flex" id="3a0fef90-89b9-80c3-84e9-f56e98a2ec53" dir="ltr"><div style="width:100%"><p id="375fef90-89b9-81e8-8414-fec2e7e05789" class="" dir="auto"><strong>PXD (Product eXperience Design)</strong> is a structured approach focused on designing seamless, effective, and empathetic healthcare experiences for patients, caregivers, and medical professionals.</p><figure id="389fef90-89b9-8065-aa12-fddd6e637975" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/e4c82f88-66fe-4674-a1f7-6455468cb499.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/e4c82f88-66fe-4674-a1f7-6455468cb499.png"><img style="width:672px" src="Meds%20Reminder%20UX%20Case%20Study/e4c82f88-66fe-4674-a1f7-6455468cb499.png"/></a></figure></div></aside><h2 id="3a0fef90-89b9-804f-b3df-eb25fe18ef21" class="" dir="auto">“PXD” vs “Design Thinking”</h2><aside class="block-color-default_background callout" data-notion-callout="" data-notion-callout-background="default_background" style="white-space:pre-wrap;display:flex" id="3a0fef90-89b9-80ea-a85c-d9c7fa682d85" dir="ltr"><div style="width:100%"><p id="375fef90-89b9-81b9-96a7-f5bfc08818c9" class="" dir="auto">✅ <strong>Healthcare Focused</strong> – PXD aligns with medical needs, compliance, &amp; patient safety.</p><p id="375fef90-89b9-81a2-927d-e8ea724880df" class="" dir="auto">✅<strong> Patient-Centric </strong> – Prioritizes empathy and usability for patients &amp; caregivers.</p><p id="375fef90-89b9-8141-afb6-d46ef5309335" class="" dir="auto">✅<strong> Regulatory Compliance</strong> – Adheres to healthcare laws(HIPPA/ GDPR) &amp; ethical considerations.</p><p id="375fef90-89b9-8179-8cc1-e95fd8b17211" class="" dir="auto">✅ <strong>Clinical Validation</strong> – Integrates medical research and expert insights.</p></div></aside><h2 id="375fef90-89b9-8179-84be-e5466310bc8b" class="" dir="auto">PXD aligns with “SAFe agile”</h2><aside class="block-color-default_background callout" data-notion-callout="" data-notion-callout-background="default_background" style="white-space:pre-wrap;display:flex" id="3a0fef90-89b9-8011-b3a1-d4be07893e47" dir="ltr"><div style="width:100%"><p id="3a0fef90-89b9-8012-8730-deb41118a20c" class="" dir="auto">PXD is user-centered &amp; design-driven, while 🚀 SAFe scales Agile across organizations.🎯 Both focus on customer needs, collaboration 🤝, and iterative improvements 🔄.📌 PXD integrates with SAFe’s PI Planning, Agile Release Trains (ARTs), and backlog management.</p><figure id="389fef90-89b9-800f-ade0-f2b62ebdbe7e" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/image%202.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/image%202.png"><img style="width:672px" src="Meds%20Reminder%20UX%20Case%20Study/image%202.png"/></a></figure></div></aside><figure id="389fef90-89b9-8071-8981-d63a6d4b6d2a" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/image%203.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/image%203.png"><img style="width:672px" src="Meds%20Reminder%20UX%20Case%20Study/image%203.png"/></a></figure><h2 id="375fef90-89b9-81bb-b861-cfdffcd73b12" class="" dir="auto">‎Desk research </h2><aside class="block-color-default_background callout" data-notion-callout="" data-notion-callout-background="default_background" style="white-space:pre-wrap;display:flex" id="3a0fef90-89b9-8060-ad40-fffa7723b912" dir="ltr"><div style="width:100%"><p id="375fef90-89b9-81e5-8522-e09606fecd3e" class="" dir="auto">We conducted <strong>desk research, surveys, interviews </strong>and<strong> competitive analysis</strong> to understand user <strong>behaviors, pain points, </strong>and<strong> adherence challenges</strong>. As this will help identify gaps in existing solutions. Insights from this research will guide the design of an intuitive, engaging, and effective medication reminder to improve adherence and user experience.</p><p id="375fef90-89b9-813a-9879-c549519e789f" class="" dir="auto"><strong>Target Users:</strong> Patients with chronic conditions, elderly users, caregivers, and individuals with busy lifestyles.</p><p id="375fef90-89b9-8108-8b98-f9f84d8dafd3" class="" dir="auto"><strong>Methods Used:</strong> Desk research, Forums and Store reviews.</p><p id="375fef90-89b9-8152-83c2-efdbadc009e6" class="" dir="auto"><strong>Key Findings:</strong></p><p id="375fef90-89b9-81b3-9d92-dab2128846a7" class="" dir="auto">✅ <strong>65%</strong> <span style="border-bottom:0.05em solid">of users forget to take medications</span> at least once a week.</p><p id="375fef90-89b9-8134-85a7-ce894ddb3774" class="" dir="auto">✅ <strong>40%</strong> <span style="border-bottom:0.05em solid">of users rely on manual reminders</span> (e.g., alarms, sticky notes).</p><p id="375fef90-89b9-812e-8cfd-d0e2499306c4" class="" dir="auto">✅ <strong>80%</strong> <span style="border-bottom:0.05em solid">Users prefer simple, non-intrusive reminders</span> over complex notifications.</p></div></aside><h2 id="375fef90-89b9-8193-ab25-f8d1328dbea0" class="" dir="auto">Competitor analysis</h2><p id="375fef90-89b9-8108-9e0f-efda22c176b4" class="" dir="auto">We analyzed leading medication reminder apps to assess usability, features, and notification effectiveness. 🔍 This helps identify gaps and opportunities to<strong> enhance reminder</strong> <strong>accuracy</strong>, <strong>engagement</strong>, and <strong>adherence tracking</strong>. 🚀 By learning from competitors, we aim to build a seamless and user-friendly experience.</p><table id="39ffef90-89b9-801e-ae6f-dbd0b236187a" class="simple-table" dir="ltr"><thead class="simple-table-header"><tr id="39ffef90-89b9-8026-a990-c9116d02b619" dir="ltr"><th id="hiNS" class="simple-table-header-color simple-table-header" style="width:203.9957275390625px"><strong>App</strong></th><th id="yxzF" class="simple-table-header-color simple-table-header" style="width:288px"><strong>Strengths</strong></th><th id="PWAD" class="simple-table-header-color simple-table-header" style="width:352px"><strong>Gaps &amp; Opportunities</strong></th></tr></thead><tbody><tr id="39ffef90-89b9-8059-8b8d-f22f551a1b57" dir="ltr"><td id="hiNS" class="" style="width:203.9957275390625px"><strong>Medisafe</strong></td><td id="yxzF" class="" style="width:288px">• Gamified adherence<br/>• Smart pill tracking<br/>• Intuitive UI</td><td id="PWAD" class="" style="width:352px">• No EHR integration<br/>• Limited caregiver support<br/>• Basic adherence insights</td></tr><tr id="39ffef90-89b9-8053-93aa-ed501b5dded5" dir="ltr"><td id="hiNS" class="" style="width:203.9957275390625px"><strong>Pill Reminder</strong></td><td id="yxzF" class="" style="width:288px">• Senior-friendly interface<br/>• Simple reminder setup<br/>• Easy to use</td><td id="PWAD" class="" style="width:352px">• Limited customization<br/>• No analytics<br/>• Limited cloud sync</td></tr><tr id="39ffef90-89b9-80dc-868d-f79ac3007306" dir="ltr"><td id="hiNS" class="" style="width:203.9957275390625px"><strong>Apple Health</strong></td><td id="yxzF" class="" style="width:288px">• Unified health ecosystem<br/>• Comprehensive health tracking<br/>•  Native iOS integration</td><td id="PWAD" class="" style="width:352px">• No dedicated medication workflow<br/>• Limited adherence tracking<br/>• No clinician collaboration</td></tr><tr id="39ffef90-89b9-8067-a660-c27c5435ba67" dir="ltr"><td id="hiNS" class="" style="width:203.9957275390625px"><strong>MyTherapy</strong></td><td id="yxzF" class="" style="width:288px">• Medication tracking<br/>• Symptom &amp; health journal<br/>• Multiple reminder types</td><td id="PWAD" class="" style="width:352px">•  Cluttered interface<br/>•  Complex onboarding<br/>•  Information overload</td></tr><tr id="39ffef90-89b9-8000-b951-c773294379d4" dir="ltr"><td id="hiNS" class="" style="width:203.9957275390625px"><strong>CareZone</strong></td><td id="yxzF" class="" style="width:288px">• Prescription management<br/>• Family sharing<br/>• Document storage</td><td id="PWAD" class="" style="width:352px">• No adherence analytics<br/>• Basic reminders<br/>• Limited care insights</td></tr><tr id="39ffef90-89b9-8093-9e93-f6a22db092f3" dir="ltr"><td id="hiNS" class="" style="width:203.9957275390625px"><strong>Mango Health</strong></td><td id="yxzF" class="" style="width:288px">• Reward-based engagement<br/>• Engaging UI<br/>• Habit-building approach</td><td id="PWAD" class="" style="width:352px">• Limited medication database<br/>• No doctor integration<br/>• Limited availability</td></tr><tr id="39ffef90-89b9-80d4-a3e9-fef45d2133fa" dir="ltr"><td id="hiNS" class="" style="width:203.9957275390625px"><strong>Round Health</strong></td><td id="yxzF" class="" style="width:288px">• Minimal, clean UI<br/>• Quick setup<br/>• Easy medication scheduling</td><td id="PWAD" class="" style="width:352px">• No refill reminders<br/>• Limited personalization<br/>• No caregiver support</td></tr><tr id="39ffef90-89b9-809c-8aba-d8ee6872c477" dir="ltr"><td id="hiNS" class="" style="width:203.9957275390625px"><strong>Dosecast</strong></td><td id="yxzF" class="" style="width:288px">• Flexible reminders<br/>• Offline support<br/>• Custom schedules</td><td id="PWAD" class="" style="width:352px">•  Outdated UI<br/>•  No multi-user support<br/>•  Limited health insights</td></tr></tbody></table><p id="375fef90-89b9-8161-9c48-d88250af64f4" class="" dir="auto">‎ ‎‎‎‎ 🔗 <a href="https://www.medicalnewstoday.com/articles/pill-reminder#Quick-links">External site</a> for a quick competitor analysis glance.</p><h2 id="375fef90-89b9-81d3-8973-d53315c039a1" class="" dir="auto">Framing of Hypothesise</h2><p id="375fef90-89b9-8161-b41a-eadafd5cdf6f" class="" dir="auto">A hypothesis is a testable insigtes predicting the impact of a medication reminder system on adherence and health outcomes.</p><figure id="389fef90-89b9-8028-b5ba-e508962eaf7c" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/image%204.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/image%204.png"><img style="width:960px" src="Meds%20Reminder%20UX%20Case%20Study/image%204.png"/></a></figure><p id="375fef90-89b9-81aa-b2b2-d9cb2e2b3258" class="" dir="auto">‎ ‎‎‎</p><h2 id="375fef90-89b9-8106-a30e-dac8117b4ce0" class="" dir="auto">Closed group interview 🖥️</h2><aside class="block-color-default_background callout" data-notion-callout="" data-notion-callout-background="default_background" style="white-space:pre-wrap;display:flex" id="39ffef90-89b9-80fa-ac47-cb11f16a39c4" dir="ltr"><div style="width:100%"><p id="375fef90-89b9-81a9-b98a-e97d620f9884" class="" dir="auto">To gather in-depth insights on medication adherence challenges and user preferences through focused discussions with a select group of target users.</p><figure id="389fef90-89b9-8085-8b28-d7469d0f23eb" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/image%205.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/image%205.png"><img style="width:672px" src="Meds%20Reminder%20UX%20Case%20Study/image%205.png"/></a></figure><h4 id="39ffef90-89b9-8028-b3af-ff928680f584" class="" dir="auto">Participants:</h4><ul id="39ffef90-89b9-80ca-828f-ec23ffa0495d" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>Elderly users</strong> (50-65+) with chronic conditions</li></ul><ul id="39ffef90-89b9-800e-a9d0-c97aacc11c1d" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>Caregivers</strong> (family members &amp; nurses)</li></ul><ul id="39ffef90-89b9-80a1-97fb-d13a59d8ed47" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>Busy</strong> <strong>professionals</strong> managing<strong> </strong>multiple medications</li></ul><h4 id="39ffef90-89b9-80bb-be9a-f5619d52332b" class="" dir="auto">Methodology:</h4><ul id="39ffef90-89b9-8089-a1ad-e69bd409a0c7" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>5-7 participants</strong> per session for deep discussions</li></ul><ul id="39ffef90-89b9-80be-be82-e1c75f9139e9" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>Virtual interviews</strong> for diverse accessibility</li></ul><ul id="39ffef90-89b9-80c0-966b-f6119991a4f2" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>Semi-structured </strong>questions for guided yet flexible discussions</li></ul></div></aside><h3 id="375fef90-89b9-815d-b6fe-c6c5a0b9b57e" class="" dir="auto">Key Questions asked </h3><aside class="block-color-default_background callout" data-notion-callout="" data-notion-callout-background="default_background" style="white-space:pre-wrap;display:flex" id="3a0fef90-89b9-8058-af4b-dd28b4e1755c" dir="ltr"><div style="width:100%"><p id="3a0fef90-89b9-80e2-8096-d108dc75ffd6" class="" dir="auto">To better understand users&#x27; daily medication habits, we conducted interviews with older adults and caregivers. These conversations revealed common challenges, unmet needs, and opportunities to improve medication adherence.</p><figure id="389fef90-89b9-800d-bdb8-c243edb8a67e" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/164c690b-8fe8-4c2f-9d78-b7e13ac536a6.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/164c690b-8fe8-4c2f-9d78-b7e13ac536a6.png"><img style="width:672px" src="Meds%20Reminder%20UX%20Case%20Study/164c690b-8fe8-4c2f-9d78-b7e13ac536a6.png"/></a></figure></div></aside><p id="375fef90-89b9-81ed-a61d-eb0eba353951" class="" dir="auto">
+</p><h2 id="375fef90-89b9-8193-bad2-c7cb7ae273fa" class="" dir="auto">Key Findings</h2><aside class="block-color-default_background callout" data-notion-callout="" data-notion-callout-background="default_background" style="white-space:pre-wrap;display:flex" id="3a0fef90-89b9-8095-b6f7-c5e107032edc" dir="ltr"><div style="width:100%"><ul id="375fef90-89b9-81ee-9614-dadce2a510ab" class="bulleted-list" dir="auto"><li style="list-style-type:disc">✅ <strong>Users forget medications</strong> due to busy schedules or memory issues.</li></ul><ul id="375fef90-89b9-8104-a2bc-edf74643bc0c" class="bulleted-list" dir="auto"><li style="list-style-type:disc">📢 <strong>Simple, clear reminders are preferred</strong> over complex notifications.</li></ul><ul id="375fef90-89b9-8177-a1ec-ca02cf0d7891" class="bulleted-list" dir="auto"><li style="list-style-type:disc">🔎 <strong>Large fonts &amp; high contrast improve usability</strong> for older adults.</li></ul><ul id="375fef90-89b9-81c2-9e9f-dea0e28a664f" class="bulleted-list" dir="auto"><li style="list-style-type:disc">⏰ <strong>Customizable reminder frequency</strong> &amp; timing are essential.</li></ul><ul id="375fef90-89b9-816f-9bca-c0504848b40e" class="bulleted-list" dir="auto"><li style="list-style-type:disc">👥 Caregivers benefit from <strong>shared reminder access.</strong></li></ul><ul id="375fef90-89b9-8141-abbd-c3d1dac7741d" class="bulleted-list" dir="auto"><li style="list-style-type:disc">💊 <strong>Auto-refill reminders</strong> support prescription adherence</li></ul><ul id="375fef90-89b9-818d-8a17-deef54ef48b5" class="bulleted-list" dir="auto"><li style="list-style-type:disc">⚡ Users prefer a quick, <strong>seamless setup</strong>.</li></ul><ul id="375fef90-89b9-81de-84d1-eec17dd4bed0" class="bulleted-list" dir="auto"><li style="list-style-type:disc">🔐 <strong>Data privacy concerns</strong> affect adoption.</li></ul><figure id="389fef90-89b9-80ee-a593-ea0a393787d4" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/0bdb3d96-e3cb-4c3c-8184-3a86ea76090f.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/0bdb3d96-e3cb-4c3c-8184-3a86ea76090f.png"><img style="width:637.8436657681941px" src="Meds%20Reminder%20UX%20Case%20Study/0bdb3d96-e3cb-4c3c-8184-3a86ea76090f.png"/></a></figure></div></aside><p id="375fef90-89b9-811f-b8f7-fad840e5f9dd" class="" dir="auto">
+</p><h2 id="375fef90-89b9-816c-a43f-e8bf528c1644" class="" dir="auto">User Persona 👨‍⚕️</h2><aside class="block-color-default_background callout" data-notion-callout="" data-notion-callout-background="default_background" style="white-space:pre-wrap;display:flex" id="3a0fef90-89b9-80ae-aba7-c5ce9594ea88" dir="ltr"><div style="width:100%"><p id="375fef90-89b9-8108-9576-d18863b2e9fc" class="" dir="auto">Emily is a 🌼 60-year-old retired teacher living in Manchester, UK. She enjoys morning walks 🚶‍♀️, gardening 🌿, and spending time with her family 👪. Tech-savvy 📱 and keen on health, she manages hypertension and arthritis with ease. Emily values simple, user-friendly tools to stay on top of her health 📅.</p><figure id="389fef90-89b9-802b-9991-f37fd6c2aa62" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/image%206.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/image%206.png"><img style="width:3728px" src="Meds%20Reminder%20UX%20Case%20Study/image%206.png"/></a></figure></div></aside><h2 id="38dfef90-89b9-8099-8b9b-c63ff903c203" class="" dir="auto"><br/>User journey maping 💡</h2><aside class="block-color-default_background callout" data-notion-callout="" data-notion-callout-background="default_background" style="white-space:pre-wrap;display:flex" id="3a0fef90-89b9-8057-9abf-fb340d53989d" dir="ltr"><div style="width:100%"><p id="38dfef90-89b9-80fe-98b5-ea65131ac1a9" class="" dir="auto">Users recognize the need for a medication reminder 🎯 and onboard by setting up their<strong> profile and medications</strong> 📝. They <strong>receive reminders</strong> ⏰, <strong>log doses</strong>, and <strong>track adherence</strong> daily. Engagement grows with progress insights 📊, and caregivers stay informed. Finally, <strong>support &amp; retention</strong> 🤝 ensure continued use through updates and motivation.</p><figure id="39ffef90-89b9-80d2-90ad-d0f360a71daf" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/image%207.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/image%207.png"><img style="width:3197px" src="Meds%20Reminder%20UX%20Case%20Study/image%207.png"/></a></figure></div></aside><p id="38dfef90-89b9-80a3-ace4-d4358ef9d1f3" class="" dir="auto">
+</p><h2 id="38dfef90-89b9-8090-8f6d-d7054e6c6821" class="" dir="auto">Clinical analysis 🔍</h2><aside class="block-color-default_background callout" data-notion-callout="" data-notion-callout-background="default_background" style="white-space:pre-wrap;display:flex" id="39ffef90-89b9-8063-9dc6-f6b09f01022b" dir="ltr"><div style="width:100%"><h4 id="38dfef90-89b9-80c9-b2ae-f5c04e738096" class="" dir="auto"><span style="border-bottom:0.05em solid">Key Clinical Research Considerations</span></h4><h4 id="38dfef90-89b9-80cc-b3a4-e902b33422f6" class="" dir="auto">✔ <strong>Clinical Safety Check</strong></h4><p id="38dfef90-89b9-8002-9889-cbae36966623" class="" dir="auto">Aligns reminders with prescribed dosages &amp; Prevents missed doses with safety warnings.</p><h4 id="38dfef90-89b9-806b-af0f-c7aaba76b319" class="" dir="auto">✔ <strong>Regulatory Compliance</strong></h4><p id="38dfef90-89b9-80f0-9bf3-c7d43e3c1d72" class="" dir="auto">Follows healthcare laws (HIPAA, GDPR) for secure data handling</p><h4 id="38dfef90-89b9-8085-848d-d184fb66d2d4" class="" dir="auto">✔ <strong>Data Privacy</strong></h4><p id="38dfef90-89b9-80fa-9dd1-c8f540130f76" class="" dir="auto">Protects health data with encryption &amp; controlled access &amp; Ensures informed consent</p><figure id="39ffef90-89b9-8063-9a83-e07cbd1e5bb4" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/image%208.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/image%208.png"><img style="width:576px" src="Meds%20Reminder%20UX%20Case%20Study/image%208.png"/></a></figure></div></aside><h3 id="38dfef90-89b9-8077-9f33-c39f36c2fb65" class="" dir="auto">✅ Key Insights</h3><aside class="block-color-default_background callout" data-notion-callout="" data-notion-callout-background="default_background" style="white-space:pre-wrap;display:flex" id="3a0fef90-89b9-80e3-a22f-cc0534a98312" dir="ltr"><div style="width:100%"><p id="38dfef90-89b9-8074-b353-def11896de3f" class="" dir="auto">Analyzed <strong>1 million dosage </strong>descriptions to ensure comprehensive coverage of all possible reminder configurations minimizes the risk of missing any frequency type.</p><h4 id="38dfef90-89b9-8083-926c-ee2d909a0faf" class="" dir="auto">✔ <strong>Daily Reminders:</strong> </h4><p id="3a0fef90-89b9-8031-b608-cda6bd3e322b" class="" dir="auto">The most common type, used for maintenance medications like blood pressure or diabetes meds.</p><h4 id="38dfef90-89b9-805f-a519-f9e017f158f8" class="" dir="auto">✔<strong> Regular Intervals</strong>: </h4><p id="3a0fef90-89b9-807a-8497-e99e930149e1" class="" dir="auto">Found in short-term treatments (e.g., painkillers every 6 hours) and specific dosages (e.g., antibiotics every 8 hours).</p><h4 id="38dfef90-89b9-809e-918f-fc7740c046af" class="" dir="auto"><strong>✔ Specific Days:</strong></h4><p id="3a0fef90-89b9-8020-9774-edc9bda598f1" class="" dir="auto"> Typically used for medications like weekly vitamin supplements or bi-weekly injections.</p><p id="38dfef90-89b9-803d-9981-d61f71abd9fe" class="" dir="auto">🔗 You can find the the<mark class="highlight-blue" data-notion-highlight="blue"> </mark><em><mark class="highlight-blue" data-notion-highlight="blue"><strong><a href="https://docs.google.com/spreadsheets/d/1RGWU354LdiCbf81Z26zbldsKEACymjMFsm1BSwFsyCA/edit?usp=drive_link">Doasage frequency type Data sheet</a></strong></mark></em><em><strong> 👈</strong></em></p></div></aside><p id="38dfef90-89b9-80ea-86fb-c57b1d57474c" class="" dir="auto">‎ ‎‎‎</p><h2 id="38dfef90-89b9-8048-8ede-c13a42a958a2" class="" dir="auto">Problem Statement 🤔</h2><blockquote id="38dfef90-89b9-80eb-a4e4-d70363ba2278" class="" dir="auto"> Medication non-adherence is a major healthcare challenge, causing worsening health conditions,  increased hospitalizations, and higher medical costs. Many patients, especially the elderly and busy professionals , forget to take medications due to cognitive decline, hectic schedules, or lack of reminders. “</blockquote><aside class="block-color-default_background callout" data-notion-callout="" data-notion-callout-background="default_background" style="white-space:pre-wrap;display:flex" id="39ffef90-89b9-80d8-ac9e-f0fed42e8de3" dir="ltr"><div style="width:100%"><aside class="block-color-gray_background callout" data-notion-callout="" data-notion-callout-background="gray_background" style="white-space:pre-wrap;display:flex" id="3a0fef90-89b9-8050-9b78-c4740976f7f6" dir="ltr"><div style="width:100%"><h3 id="3a0fef90-89b9-808c-948d-d117dcbf3398" class="" dir="auto">&quot;How Might We&quot; (HMW) framework</h3></div></aside><p id="3a0fef90-89b9-80f6-ac3d-ec9b3b6be54f" class="" dir="auto">
+</p><figure id="39ffef90-89b9-8071-8aec-f2c323d3af71" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/6be3bbed-b8a2-441a-8eda-2ffa70a78b96.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/6be3bbed-b8a2-441a-8eda-2ffa70a78b96.png"><img style="width:588.2634730538922px" src="Meds%20Reminder%20UX%20Case%20Study/6be3bbed-b8a2-441a-8eda-2ffa70a78b96.png"/></a></figure></div></aside><h2 id="38dfef90-89b9-80d1-87da-e9aeea6bf57e" class="" dir="auto">Breaking Down the Problem Statement:</h2><aside class="block-color-default_background callout" data-notion-callout="" data-notion-callout-background="default_background" style="white-space:pre-wrap;display:flex" id="39ffef90-89b9-8062-a4d8-dc9c522ffa3e" dir="ltr"><div style="width:100%"><aside class="block-color-gray_background callout" data-notion-callout="" data-notion-callout-background="gray_background" style="white-space:pre-wrap;display:flex" id="39ffef90-89b9-804f-b3cc-fcda44cafde8" dir="ltr"><div style="width:100%"><h4 id="38dfef90-89b9-8068-bcbf-d7a88e28a858" class="" dir="auto">1️⃣ How might we make it simple?</h4></div></aside><ul id="38dfef90-89b9-800b-9607-c2ca8de15305" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>Design an intuitive UI </strong>with minimal steps to add and track medications.</li></ul><ul id="38dfef90-89b9-801c-9884-f8a62ff48bc3" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Use clear visual cues and interactions for accessibility.</li></ul><aside class="block-color-gray_background callout" data-notion-callout="" data-notion-callout-background="gray_background" style="white-space:pre-wrap;display:flex" id="39ffef90-89b9-80a1-80e9-f4b94dddfa4a" dir="ltr"><div style="width:100%"><h4 id="39ffef90-89b9-80d8-8b56-c555e94dc32a" class="" dir="auto">2️⃣ How might we ensure adherence?</h4></div></aside><ul id="38dfef90-89b9-80db-914e-c451152495f4" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>Smart reminders</strong> with flexible snooze options.</li></ul><ul id="38dfef90-89b9-8049-970c-c3159626e198" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>Gamification</strong> &amp; rewards to encourage habit formation.</li></ul><ul id="38dfef90-89b9-80b2-8645-c3f6e0ff05e3" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>Caregiver notification</strong>s for additional support.</li></ul><aside class="block-color-gray_background callout" data-notion-callout="" data-notion-callout-background="gray_background" style="white-space:pre-wrap;display:flex" id="39ffef90-89b9-80ea-9820-e24cb79dcd59" dir="ltr"><div style="width:100%"><h4 id="38dfef90-89b9-804c-b11a-e19050ea8124" class="" dir="auto">3️⃣ How might we reduce health risks?</h4></div></aside><ul id="38dfef90-89b9-808c-bf2b-edf8eeab4916" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>Drug interaction alerts</strong> to prevent harmful combinations.</li></ul><ul id="38dfef90-89b9-8000-b3ac-c5f8bad2a6ba" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>Health insights</strong> &amp; reports to track adherence patterns.</li></ul></div></aside><p id="38dfef90-89b9-8005-bbd7-ee68c629bc00" class="" dir="auto">‎</p><h2 id="38dfef90-89b9-80fd-ba6b-e1983992eb6f" class="" dir="auto">🎬✨Storyboarding: How it fits in &quot;Define&quot; Phase:</h2><p id="38dfef90-89b9-8008-8749-ccc381ab24b1" class="" dir="auto">✅ <strong>Clarifies User Problems</strong> – Helps visualize real-life user scenarios and frustrations.</p><p id="38dfef90-89b9-80bb-92f1-e6d7ee29dc6a" class="" dir="auto">✅ <strong>Explores Potential Solutions</strong> – Maps out possible ways a product can solve user pain points.</p><p id="38dfef90-89b9-80fc-85e2-d25dd0a35a75" class="" dir="auto">✅ <strong>Aligns Stakeholders</strong> – Provides a shared vision of the UX before moving into design.</p><p id="38dfef90-89b9-8098-85b3-d22a7e0a4b99" class="" dir="auto">‎</p><figure id="39ffef90-89b9-80a0-8f95-cc90b3785a44" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/Screenshot_2026-07-16_at_5.12.38_PM.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/Screenshot_2026-07-16_at_5.12.38_PM.png"><img style="width:703.9921875px" src="Meds%20Reminder%20UX%20Case%20Study/Screenshot_2026-07-16_at_5.12.38_PM.png"/></a></figure><h2 id="38dfef90-89b9-8069-9c88-f7940ed42052" class="" dir="auto">🎯 Opportunity Solution Tree (OST)</h2><p id="38dfef90-89b9-808b-9b31-e6269072c3cf" class="" dir="auto">An Opportunity Solution Tree (OST) is a visual decision-making framework used in UX, product design, and problem-solving. It helps teams connect high-level goals from <strong><span style="border-bottom:0.05em solid">Pain points</span></strong>, to <strong><span style="border-bottom:0.05em solid">User needs</span></strong>, <strong><span style="border-bottom:0.05em solid">opportunities</span></strong>, and <strong><span style="border-bottom:0.05em solid">solutions</span></strong> in a structured way.</p><p id="38dfef90-89b9-808c-bdc7-c5890195b72c" class="" dir="auto">‎</p><p id="38dfef90-89b9-80d3-873f-e2bb604bb45e" class="" dir="auto"><strong>Why Use OST?</strong></p><p id="38dfef90-89b9-8091-943b-d390e3ca3009" class="" dir="auto">✅ Avoids random feature-building</p><p id="38dfef90-89b9-8048-be0d-e0575041a74a" class="" dir="auto">✅ Aligns UX design with real user problems</p><p id="38dfef90-89b9-80da-96ae-f15642fa0c43" class="" dir="auto">✅ Helps prioritize best ideas</p><p id="38dfef90-89b9-8058-8441-d5b82d491df0" class="" dir="auto">✅ Identify Pain Points &amp; User Needs</p><p id="38dfef90-89b9-80f9-8fcd-c29332bf5357" class="" dir="auto">✅ Generate Ideas &amp; Uncover Opportunities</p><figure id="39ffef90-89b9-8072-ba28-c179221a15a7" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/image%209.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/image%209.png"><img style="width:816px" src="Meds%20Reminder%20UX%20Case%20Study/image%209.png"/></a></figure><h2 id="38dfef90-89b9-80dd-ab62-c4c968e7193e" class="" dir="auto">📌 Requirement Mapping with Business Value</h2><p id="38dfef90-89b9-8021-b05e-c79b9a7d6092" class="" dir="auto">Requirement mapping with business value helps align project needs with real business impact. It ensures every feature or function adds value—whether it’s boosting revenue, cutting costs, improving efficiency, or enhancing customer experience.</p><p id="38dfef90-89b9-80a6-bc59-dae44e08f4dc" class="" dir="auto">‎</p><table id="38dfef90-89b9-8001-9a02-fcc6e16c0b8d" class="simple-table" dir="ltr"><thead class="simple-table-header"><tr id="38dfef90-89b9-809c-b557-e657d5dd0ec1" dir="ltr"><th id="kpo@" class="simple-table-header-color simple-table-header" style="width:240.92044067382812px">Requirement 📝</th><th id="BjZT" class="simple-table-header-color simple-table-header">User Benefit 🎯</th><th id=";miX" class="simple-table-header-color simple-table-header">Business Value 💰</th></tr></thead><tbody><tr id="38dfef90-89b9-80de-8584-fc5aea36a3f3" dir="ltr"><td id="kpo@" class="" style="width:240.92044067382812px"><strong>Scheduled Reminders</strong> ⏰</td><td id="BjZT" class="">Helps users take medication on time, improving adherence</td><td id=";miX" class="">Reduces hospital readmissions, lowering healthcare costs</td></tr><tr id="38dfef90-89b9-801e-88dd-ece58a4393c4" dir="ltr"><td id="kpo@" class="" style="width:240.92044067382812px"><strong>Customizable Alerts</strong> 🔔</td><td id="BjZT" class="">Allows users to set reminders based on their routine &amp; preferences</td><td id=";miX" class="">Increases app engagement and retention</td></tr><tr id="38dfef90-89b9-808e-9370-e3351566aee8" dir="ltr"><td id="kpo@" class="" style="width:240.92044067382812px"><strong>Caregiver Notifications</strong> 👨‍⚕️</td><td id="BjZT" class="">Enables caregivers to monitor adherence remotely</td><td id=";miX" class="">Enhances trust and adoption among caregivers</td></tr><tr id="38dfef90-89b9-8033-8052-c9b1695d4f9d" dir="ltr"><td id="kpo@" class="" style="width:240.92044067382812px"><strong>Drug Interaction Alerts</strong> ⚠️</td><td id="BjZT" class="">Prevents harmful medication combinations</td><td id=";miX" class="">Reduces liability and improves patient safety</td></tr><tr id="38dfef90-89b9-8068-8027-e772ec73f2e3" dir="ltr"><td id="kpo@" class="" style="width:240.92044067382812px"><strong>Health Insights &amp; Reports</strong> 📊</td><td id="BjZT" class="">Tracks adherence trends for users &amp; doctors</td><td id=";miX" class="">Opens monetization opportunities via premium insights</td></tr><tr id="38dfef90-89b9-80e4-a395-d85393a308d0" dir="ltr"><td id="kpo@" class="" style="width:240.92044067382812px"><strong>Seamless App Integration</strong> 🔄</td><td id="BjZT" class="">Works within an existing patient app for convenience</td><td id=";miX" class="">Increases user adoption with minimal learning curve</td></tr><tr id="38dfef90-89b9-80b9-a0c5-f04c065fab79" dir="ltr"><td id="kpo@" class="" style="width:240.92044067382812px"><strong>Voice Assistant Support</strong> 🎙️</td><td id="BjZT" class="">Helps elderly or visually impaired users with reminders</td><td id=";miX" class="">Expands user base by making the app more accessible</td></tr><tr id="38dfef90-89b9-8082-b39f-d0d74dce4706" dir="ltr"><td id="kpo@" class="" style="width:240.92044067382812px"><strong>Gamification &amp; Rewards</strong> 🎯</td><td id="BjZT" class="">Encourages consistent medication habits</td><td id=";miX" class="">Boosts long-term engagement &amp; brand loyalty</td></tr></tbody></table><p id="38dfef90-89b9-80a9-b281-c6ae5b1a1598" class="" dir="auto">‎</p><figure id="39ffef90-89b9-808a-ba67-e8b9df6326a2" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/image%2010.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/image%2010.png"><img style="width:703.984375px" src="Meds%20Reminder%20UX%20Case%20Study/image%2010.png"/></a></figure><h2 id="38dfef90-89b9-80f5-8fff-cfb07fe4f24d" class="" dir="auto">Medication Reminder - Minimum Viable Product (MVP)</h2><p id="38dfef90-89b9-80a3-8956-ce0d9bb26520" class="" dir="auto">Requirement mapping with business value helps in identifying and prioritizing key features that provide immediate impact while deferring secondary functionalities for later iterations.</p><p id="38dfef90-89b9-80d0-b447-f9f27595f7c7" class="" dir="auto">For the MVP, the core feature should be:</p><p id="38dfef90-89b9-8026-a555-e02185e6215b" class="" dir="auto">✅ <strong>Medication Alerts</strong> – Timely reminders for users to take their medication.</p><p id="38dfef90-89b9-80dd-9969-c6452c87e53d" class="" dir="auto">Additional features like <strong>dose tracking,</strong> <strong>prescription refills</strong>, <strong>caregiver notifications</strong>, and <strong>health analytics</strong> can be introduced later based on user needs and business priorities.</p><figure id="39ffef90-89b9-80df-827d-ca758784b008" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/image%2011.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/image%2011.png"><img style="width:4675px" src="Meds%20Reminder%20UX%20Case%20Study/image%2011.png"/></a></figure><h2 id="38dfef90-89b9-80ae-a043-f466499e2dc3" class="" dir="auto">🎯 Objectives &amp; Goals</h2><p id="38dfef90-89b9-804c-9992-fca2fdf826cf" class="" dir="auto">✔ <strong>Increase Medication Adherence</strong> – Improve adherence by 30% 📈</p><p id="38dfef90-89b9-8081-baa5-d82d6d841ea3" class="" dir="auto">✔<strong> Daily Active Users (DAU)</strong> – Achieve 50%+ DAU rate 📊</p><p id="38dfef90-89b9-80a6-a107-c534981f363c" class="" dir="auto">✔ <strong>User Satisfaction</strong> – Maintain 4.5+ star rating ⭐</p><p id="38dfef90-89b9-8055-a49d-c9a7a03689b2" class="" dir="auto">✔ <strong>Caregiver Adoption</strong> – Boost caregiver sign-ups by 20% 🤝</p><p id="38dfef90-89b9-80ad-8f6f-f4c8bdfcbaf4" class="" dir="auto">✔ <strong>Retention Rate</strong> – Ensure 70% user retention after 30 days 🔄</p><p id="38dfef90-89b9-80e3-9444-dbaa156de4ff" class="" dir="auto">✔ <strong>Onboarding Success</strong> – Achieve 90% completion rate 🚀</p><figure id="39ffef90-89b9-8082-abd9-dd5e96d7df6d" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/image%2012.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/image%2012.png"><img style="width:8878px" src="Meds%20Reminder%20UX%20Case%20Study/image%2012.png"/></a></figure><h2 id="38dfef90-89b9-807e-ad91-db698010a400" class="" dir="auto">User flow</h2><p id="38dfef90-89b9-8065-90fa-cef9b73af44b" class="" dir="auto">Enables easy setup and management of reminders via the More section after consent. Users can schedule daily, interval, or custom alerts with notifications ensuring adherence. Reminders are editable, previewable, and can be turned off anytime for flexibility.</p><figure id="39ffef90-89b9-80f7-8734-dac1e06151c1" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/image%2013.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/image%2013.png"><img style="width:912px" src="Meds%20Reminder%20UX%20Case%20Study/image%2013.png"/></a></figure><p id="38dfef90-89b9-803c-bb9c-f2384247b3a9" class="" dir="auto">‎ ‎‎‎</p><h2 id="38dfef90-89b9-8005-adb1-e5e874620978" class="" dir="auto">Task flow - Key steps</h2><p id="38dfef90-89b9-8009-af3f-cefe88d41e5a" class="" dir="auto">Task Flow is a step-by-step sequence that outlines how a user completes a specific task within an app or system. In a medication reminder task flow, users select a medication, set a reminder, receive notifications, and manage reminders ( <strong>edit,  delete, turn off</strong>).</p><figure id="3a2fef90-89b9-8082-b182-e9712465c60f" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/image%2014.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/image%2014.png"><img style="width:704px" src="Meds%20Reminder%20UX%20Case%20Study/image%2014.png"/></a></figure><h2 id="38dfef90-89b9-80d2-b4cc-f650364cbfd6" class="" dir="auto">Ideation on design approach</h2><aside class="block-color-default_background callout" data-notion-callout="" data-notion-callout-background="default_background" style="white-space:pre-wrap;display:flex" id="3a0fef90-89b9-80c5-97aa-cb0bc9da2df1" dir="ltr"><div style="width:100%"><p id="38dfef90-89b9-8041-b410-dc41d117e942" class="" dir="auto">We started with brainstorming sessions, using mind maps and sketching to explore different design concepts. We focused on creating a visually appealing, easy-to-navigate interface, while prioritizing features like customizable alerts, multiple user profiles for caregivers, and a simple medication input system.  We iterated upon these concepts based on feedback from early user testing.</p><figure id="39ffef90-89b9-80b1-9476-ca830ae70ae8" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/image%2015.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/image%2015.png"><img style="width:704px" src="Meds%20Reminder%20UX%20Case%20Study/image%2015.png"/></a></figure></div></aside><h2 id="38dfef90-89b9-8062-ac4e-f02e1f32f291" class="" dir="auto">Wireframe 📝</h2><aside class="block-color-default_background callout" data-notion-callout="" data-notion-callout-background="default_background" style="white-space:pre-wrap;display:flex" id="3a0fef90-89b9-8099-9c5a-e0411c29d447" dir="ltr"><div style="width:100%"><p id="38dfef90-89b9-8072-b2b6-e6afb176081d" class="" dir="auto">Wireframes serve as a visual guide to the user interface, outlining key screens and interactions. They showcase how users set up reminders, receive notifications, and manage their medications, focusing only on primary screens. Prioritizing clarity, ease of use, and accessibility, these wireframes help refine the user experience before the final design phase.</p><figure id="39ffef90-89b9-808b-9f04-df4b51b7170c" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/image%2016.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/image%2016.png"><img style="width:3780px" src="Meds%20Reminder%20UX%20Case%20Study/image%2016.png"/></a></figure></div></aside><p id="38dfef90-89b9-80bf-bbde-d646abb70c03" class="" dir="auto">‎</p><h2 id="38dfef90-89b9-80c6-9f51-deb5204bd342" class="" dir="auto">Lo-Fi design &amp; interaction maping 🎨</h2><aside class="block-color-default_background callout" data-notion-callout="" data-notion-callout-background="default_background" style="white-space:pre-wrap;display:flex" id="3a0fef90-89b9-801b-a773-f8d9c33fc9d1" dir="ltr"><div style="width:100%"><p id="38dfef90-89b9-8092-b993-f8d6c63c593d" class="" dir="auto">We started with low-fidelity wireframes replacing the user flows to quickly map out the app’s basic structure and Task flows. These were then refined into high-fidelity wireframes, incorporating visual design elements and interaction details.</p><figure id="39ffef90-89b9-80dc-b147-feba120a399a" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/8ccfeb83-95df-4231-b3cf-01510aa004db.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/8ccfeb83-95df-4231-b3cf-01510aa004db.png"><img style="width:912px" src="Meds%20Reminder%20UX%20Case%20Study/8ccfeb83-95df-4231-b3cf-01510aa004db.png"/></a></figure></div></aside><h2 id="38dfef90-89b9-80b9-abd6-d5c402541a51" class="" dir="auto">Design system 🎨</h2><aside class="block-color-default_background callout" data-notion-callout="" data-notion-callout-background="default_background" style="white-space:pre-wrap;display:flex" id="3a0fef90-89b9-80b2-8fcb-d1e21a41610f" dir="ltr"><div style="width:100%"><p id="38dfef90-89b9-80ea-b83c-c5cc9781eab3" class="" dir="auto">Since the medication reminder is a feature rather than a standalone app, we integrated it seamlessly with the existing content. Interactive prototypes were developed in Figma to simulate the app’s functionality and facilitate usability testing. This iterative approach enabled us to refine the design based on user feedback</p><figure id="39ffef90-89b9-80fd-8bc2-ca11e14ded65" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/image%2017.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/image%2017.png"><img style="width:5797px" src="Meds%20Reminder%20UX%20Case%20Study/image%2017.png"/></a></figure></div></aside><h2 id="38dfef90-89b9-805a-895c-d482c51714f3" class="" dir="auto">HI-Fi Prototype 🎨</h2><p id="38dfef90-89b9-8047-bb2e-df2f483f2647" class="" dir="auto">One major challenge was balancing the needs of our diverse user base. Elderly users needed a simple, large-font interface, while busy professionals needed a quick and efficient way to manage their medications. We addressed this by creating a highly customizable interface, allowing each user to tailor the app to their specific needs and preferences.</p><aside class="block-color-default_background callout" data-notion-callout="" data-notion-callout-background="default_background" style="white-space:pre-wrap;display:flex" id="3a0fef90-89b9-802d-8bc7-f2bb281ff0f8" dir="ltr"><div style="width:100%"><h3 id="38dfef90-89b9-8024-ab78-f5d1563756e3" class="" dir="auto">Invocation Points for Medication Reminder</h3><p id="38dfef90-89b9-80e7-b614-ff48bc4d0734" class="" dir="auto">1️⃣<strong> Feature List Screen:</strong> Users can access and enable medication reminders from the features/settings section.</p><p id="38dfef90-89b9-80da-80c3-dcd5ca2cb11b" class="" dir="auto">2️⃣<strong> Home Screen Dashboard:</strong> A quick-access widget or notification prompts users to manage upcoming reminders.</p><p id="38dfef90-89b9-8094-8d7d-fa39620b1a9b" class="" dir="auto"><strong>3️⃣ Order Medication Flow:</strong> When a user interacts with their medication log, reminders can be set or adjusted based on prescription details.</p><figure id="39ffef90-89b9-803d-9922-c417b8b15495" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/image%2018.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/image%2018.png"><img style="width:2335px" src="Meds%20Reminder%20UX%20Case%20Study/image%2018.png"/></a></figure></div></aside><h3 id="38dfef90-89b9-805e-9e4d-ec9c83c29b6c" class="" dir="auto">Selection of Medication</h3><aside class="block-color-default_background callout" data-notion-callout="" data-notion-callout-background="default_background" style="white-space:pre-wrap;display:flex" id="3a0fef90-89b9-8058-b929-f376b2052dd9" dir="ltr"><div style="width:100%"><p id="38dfef90-89b9-8018-8463-e6c361960cb7" class="" dir="auto">1️⃣ <strong>Select medication:</strong> When triggered &quot;Select medication&quot; , the reminder directs users to their list of GP-prescribed medications.</p><p id="38dfef90-89b9-804d-97d4-ea27f4909c65" class="" dir="auto">2️⃣ <strong>Medication Details</strong>: Users can view dosage instructions and important precautions for each medication.</p><figure id="39ffef90-89b9-8017-89a0-f948672a769a" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/image%2019.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/image%2019.png"><img style="width:4860px" src="Meds%20Reminder%20UX%20Case%20Study/image%2019.png"/></a></figure></div></aside><h2 id="38dfef90-89b9-8016-a35d-f0cd1d91d5fb" class="" dir="auto">Configure Reminder (Daily)</h2><aside class="block-color-default_background callout" data-notion-callout="" data-notion-callout-background="default_background" style="white-space:pre-wrap;display:flex" id="3a0fef90-89b9-80db-9245-cdefe1aafbbd" dir="ltr"><div style="width:100%"><p id="38dfef90-89b9-8067-8992-e338cdb666d5" class="" dir="auto">🔍 <strong>View Medication Details</strong> – Access dosage instructions and medaction name</p><p id="38dfef90-89b9-8042-9570-fa4ce43719d9" class="" dir="auto">⏰ <strong>Set Reminder Frequency </strong>– Choose daily, regular intervals, or specific days.</p><p id="38dfef90-89b9-8024-9983-ff1db38c8539" class="" dir="auto">📆 <strong>Select Start &amp; End Dates</strong> – Define the reminder duration.</p><p id="38dfef90-89b9-8082-8206-c3df366234ff" class="" dir="auto">🕒<strong> Choose Reminder Time</strong> – Set the exact time for alerts.</p><p id="38dfef90-89b9-8015-8d36-f88d42723683" class="" dir="auto">🔔 <strong>Personalized Notifications</strong> – Ensure timely medication intake.</p><figure id="39ffef90-89b9-80c5-b793-d84cd9d4e744" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/image%2020.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/image%2020.png"><img style="width:4688px" src="Meds%20Reminder%20UX%20Case%20Study/image%2020.png"/></a></figure></div></aside><h2 id="38dfef90-89b9-8022-b7f3-d60004b893a3" class="" dir="auto">Configure Reminder (On specific days &amp; interval)</h2><aside class="block-color-default_background callout" data-notion-callout="" data-notion-callout-background="default_background" style="white-space:pre-wrap;display:flex" id="3a0fef90-89b9-8005-ab37-f0df99b0c6e0" dir="ltr"><div style="width:100%"><p id="38dfef90-89b9-8065-9478-fb337042e203" class="" dir="auto">✅  <strong>Frequency: On Specific Days (Mon &amp; Thu)</strong> – Select the option, choose specific days (e.g., Mon, Wed, Fri), set reminder time, and save the settings.</p><p id="38dfef90-89b9-80e4-b957-f899a9061fec" class="" dir="auto">✅ <strong>Frequency: At Regular Intervals (Every 3 Days Once)</strong> – Select the option, set the interval (e.g., every 3 days), choose reminder time, and save the settings.</p><figure id="39ffef90-89b9-80b1-92b3-e4109efc84f0" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/image%2021.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/image%2021.png"><img style="width:4688px" src="Meds%20Reminder%20UX%20Case%20Study/image%2021.png"/></a></figure></div></aside><h2 id="38dfef90-89b9-8063-b73f-c414407ff81b" class="" dir="auto">View and Manage Reminders</h2><aside class="block-color-default_background callout" data-notion-callout="" data-notion-callout-background="default_background" style="white-space:pre-wrap;display:flex" id="3a0fef90-89b9-803a-9c17-c612e586bf16" dir="ltr"><div style="width:100%"><p id="38dfef90-89b9-80d5-ab37-efe356be6721" class="" dir="auto">Easily stay on track with your medication schedule :</p><p id="38dfef90-89b9-8081-b93b-e16fcdf41db5" class="" dir="auto">✅<strong>Confirm Reminder</strong> – Preview your reminder settings and activate your reminders.</p><p id="38dfef90-89b9-8088-ae9c-f6000cabebff" class="" dir="auto">✅ <strong>View Reminder</strong> – Check upcoming medication alerts at a glance.</p><p id="38dfef90-89b9-803c-8ab0-e8944e71ae31" class="" dir="auto">✅ <strong>Edit/ Delete Reminder</strong> – Modify or Turn off reminders as needed for flexibility.</p><figure id="39ffef90-89b9-8010-bc14-ea8d6e998386" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/image%2022.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/image%2022.png"><img style="width:4688px" src="Meds%20Reminder%20UX%20Case%20Study/image%2022.png"/></a></figure></div></aside><aside class="block-color-default_background callout" data-notion-callout="" data-notion-callout-background="default_background" style="white-space:pre-wrap;display:flex" id="3a0fef90-89b9-8012-b173-eca66dfef507" dir="ltr"><div style="width:100%"><h2 id="38dfef90-89b9-80c4-b129-f6fc8a1922c1" class="" dir="auto">Receive Reminder 🔔 - Effortlessly!</h2><p id="38dfef90-89b9-80c6-8b30-f38e777a2d42" class="" dir="auto">✅ <strong>Instant Notifications </strong> – Never miss a dose with timely alerts.</p><p id="38dfef90-89b9-8077-8e3d-f7157805bb9e" class="" dir="auto">✅ <strong>Quick Actions</strong>  – Long-press to mark as taken, snooze, or dismiss.</p><p id="38dfef90-89b9-80d5-ac53-f5fd40ba92dd" class="" dir="auto">✅ <strong>Current Reminder View</strong>  – Easily check details of the ongoing reminder.</p><p id="38dfef90-89b9-8025-9a88-eab4c61a958d" class="" dir="auto">✅ <strong>Stay in Control</strong>  – Manage your schedule with ease and peace of mind.</p><figure id="39ffef90-89b9-80ec-b1e3-f1cec301ad9c" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/image%2023.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/image%2023.png"><img style="width:720px" src="Meds%20Reminder%20UX%20Case%20Study/image%2023.png"/></a></figure></div></aside><figure id="39ffef90-89b9-801b-90b0-c5d4f1093e81" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/image%2024.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/image%2024.png"><img style="width:4439px" src="Meds%20Reminder%20UX%20Case%20Study/image%2024.png"/></a></figure><h2 id="38dfef90-89b9-80c0-b4f4-dcb4e50127ba" class="" dir="auto">Accessibility requirements ♿📲</h2><aside class="block-color-default_background callout" data-notion-callout="" data-notion-callout-background="default_background" style="white-space:pre-wrap;display:flex" id="3a0fef90-89b9-80ea-b951-cc54fd27bc58" dir="ltr"><div style="width:100%"><p id="38dfef90-89b9-804e-a64b-f2e50a22b1f5" class="" dir="auto">A well-designed medication reminder app ensures <strong>accessibility</strong> for users of all abilities, especially seniors and those with cognitive or physical impairments, following <strong>WCAG (Web Content Accessibility Guidelines).</strong></p><h3 id="38dfef90-89b9-801c-9a48-ec9fbfb7d1fe" class="" dir="auto"><strong>🔹 Clear &amp; Readable UI</strong> 🧐📱</h3><ul id="38dfef90-89b9-8073-b3b1-d7b05adf7331" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Large, high-contrast text for easy readability</li></ul><ul id="38dfef90-89b9-8084-820d-e7f42439fc12" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Simple, intuitive navigation with minimal steps</li></ul><h3 id="38dfef90-89b9-804d-b6d6-d17eafafe729" class="" dir="auto"><strong>🔹 Voice &amp; Audio Assistance</strong> 🎙️🔊</h3><ul id="38dfef90-89b9-80fe-b735-ce7fb8e8f243" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Voice commands for setting reminders (Alexa/Siri integration) (non-mvp)</li></ul><ul id="38dfef90-89b9-80c5-a8bf-d8ed6118fe14" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Audio alerts with <strong>customizable tones</strong></li></ul><figure id="39ffef90-89b9-8053-8be9-c946ff5eb566" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/image%2025.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/image%2025.png"><img style="width:703.9140625px" src="Meds%20Reminder%20UX%20Case%20Study/image%2025.png"/></a></figure><h3 id="38dfef90-89b9-80ad-9eb9-e5eda21e11ae" class="" dir="auto"><strong>🔹 Haptic &amp; Visual Feedback</strong></h3><ul id="38dfef90-89b9-80b7-9cd1-d3aea912b835" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Vibration notifications for those with hearing impairments</li></ul><ul id="38dfef90-89b9-807b-b8ea-cf75b490a379" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Flashing screen alerts for added visibility</li></ul><h3 id="38dfef90-89b9-8083-8197-dbbe5dbec9c0" class="" dir="auto"><strong>🔹 Multimodal Input</strong></h3><ul id="38dfef90-89b9-8039-a0ae-d8546b3645c1" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Touch-friendly buttons with large tap areas</li></ul><ul id="38dfef90-89b9-8009-ba2d-d7237f7b0131" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Option for keyboard or voice input</li></ul><h3 id="38dfef90-89b9-8081-a4a3-ecc9c6f0b7c9" class="" dir="auto"><strong>🔹 Cognitive Support</strong></h3><ul id="38dfef90-89b9-800a-9b06-c2107e15f550" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Easy-to-understand icons and labels</li></ul><ul id="38dfef90-89b9-80c2-a88f-ece7b534c28e" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Step-by-step guidance for setup</li></ul></div></aside><h2 id="38dfef90-89b9-806b-922f-eda001b83334" class="" dir="auto">Usablity testing</h2><aside class="block-color-default_background callout" data-notion-callout="" data-notion-callout-background="default_background" style="white-space:pre-wrap;display:flex" id="3a0fef90-89b9-80f7-bccd-c3610057ec88" dir="ltr"><div style="width:100%"><p id="38dfef90-89b9-803e-9c8e-e5ad78f8a906" class="" dir="auto">We conducted a usability test to evaluate the effectiveness of the Medication Reminder feature in the Patient Access app. The goal was to ensure users can easily find, understand, and set up medication reminders while identifying areas for improvement.</p><figure id="39ffef90-89b9-804b-890e-cd5d75bcd422" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/image%2026.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/image%2026.png"><img style="width:4030px" src="Meds%20Reminder%20UX%20Case%20Study/image%2026.png"/></a></figure><p id="38dfef90-89b9-801b-b61c-f5128bcc32ed" class="" dir="auto">🔗 You can find the the <a href="https://drive.google.com/file/d/1BIoVnuUkMuBZxDm2faKEMlwleuMKXgY0/view?usp=drive_link">User testing recording</a> 👈</p><p id="38dfef90-89b9-8042-ae41-f3c979faa840" class="" dir="auto">🔗 You can find the the <a href="https://docs.google.com/document/d/1oST20vFuAY3J40MihsWic9IZCyQ_veCFnTTEUvFBFHo/edit?usp=drive_link">moderated testing question</a> 👈</p></div></aside><p id="38dfef90-89b9-8037-a5d1-cf335125e01a" class="" dir="auto">‎ ‎‎‎</p><h2 id="38dfef90-89b9-8088-a963-c3d2d5ed784f" class="" dir="auto">Key Objectives &amp; Findings</h2><aside class="block-color-default_background callout" data-notion-callout="" data-notion-callout-background="default_background" style="white-space:pre-wrap;display:flex" id="3a0fef90-89b9-80df-bd9b-c34964a1b0b4" dir="ltr"><div style="width:100%"><h4 id="38dfef90-89b9-806e-bb81-c392d9747de1" class="" dir="auto">✅<strong> Task Success &amp; Navigation Clarity</strong></h4><ul id="38dfef90-89b9-80b5-b141-fcc881578a6e" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>85% of users successfully found</strong> and <strong>set up </strong>medication reminders.</li></ul><ul id="38dfef90-89b9-80f3-996f-fe7ff85667a3" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>Navigation was rated 4.2/5,</strong> with most users finding the process intuitive.</li></ul><ul id="38dfef90-89b9-8086-befa-d23b02e55979" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Some users expected to <span style="border-bottom:0.05em solid">access</span> <span style="border-bottom:0.05em solid">reminders from their Medical Record</span> instead of the Main Menu.</li></ul></div></aside><aside class="block-color-default_background callout" data-notion-callout="" data-notion-callout-background="default_background" style="white-space:pre-wrap;display:flex" id="3a0fef90-89b9-80a8-90c4-eea73520e02d" dir="ltr"><div style="width:100%"><h4 id="38dfef90-89b9-80ea-8bd1-d6902566567c" class="" dir="auto">✅ <strong>Understanding Consent &amp; Naming Clarity</strong></h4><ul id="38dfef90-89b9-804b-89b1-fdcd05104f5f" class="bulleted-list" dir="auto"><li style="list-style-type:disc">60% of users understood the consent information.</li></ul><ul id="38dfef90-89b9-8011-93d5-fcf3fbe9c479" class="bulleted-list" dir="auto"><li style="list-style-type:disc">The term &quot;<strong>Medication Reminders</strong>&quot; was the most preferred naming choice (75%), as it was straightforward.</li></ul><ul id="38dfef90-89b9-80ad-bd81-c586507d55f5" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Some confusion on <strong>&quot;Regular Intervals&quot; vs. &quot;Daily&quot;</strong>, indicating a need for clearer descriptions.</li></ul></div></aside><aside class="block-color-default_background callout" data-notion-callout="" data-notion-callout-background="default_background" style="white-space:pre-wrap;display:flex" id="3a0fef90-89b9-808f-8ea0-d8db019125e2" dir="ltr"><div style="width:100%"><p id="38dfef90-89b9-80b5-8c61-fcd7c2c47104" class="" dir="auto">✅ <strong>UI Affordance &amp; Interaction</strong></p><ul id="38dfef90-89b9-800a-b98f-cf0182dd2a35" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Clickable reminder cards were well-received, but some users struggled to differentiate <strong>active vs. disabled </strong>reminders.</li></ul><ul id="38dfef90-89b9-8072-8340-d8c856ecd8ac" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Users preferred a visual cue<strong> (color or icon change)</strong> for disabled reminders.</li></ul></div></aside><aside class="block-color-default_background callout" data-notion-callout="" data-notion-callout-background="default_background" style="white-space:pre-wrap;display:flex" id="3a0fef90-89b9-80b2-94ca-d57fc9292260" dir="ltr"><div style="width:100%"><p id="38dfef90-89b9-80c7-9aef-f6af40fd7f7b" class="" dir="auto">✅ <strong>Likelihood to Use &amp; Future Enhancements</strong></p><ul id="38dfef90-89b9-8092-8586-f8f9d6803c58" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>70% of users indicated</strong> they would use medication reminders regularly.</li></ul><ul id="38dfef90-89b9-80f2-b6e9-c5eb5e37ac2f" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Users requested additional notification options, such as mobile<strong> alerts for medication refills.</strong></li></ul><ul id="38dfef90-89b9-8051-9ef3-f83931b5fe42" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>50% of users wanted adherence tracking</strong> to monitor their medication intake.</li></ul></div></aside><p id="38dfef90-89b9-803c-abb8-efa4f18c2569" class="" dir="auto">‎ ‎‎‎</p><h1 id="38dfef90-89b9-80f4-b0bf-df308d5a82bb" class="" dir="auto">Attention map </h1><blockquote id="38dfef90-89b9-8066-bf82-d99a9c28c6fe" class="" dir="auto"><strong>Attention map</strong> shows which elements attract attention. It reveals the most dominant<br/>focal point - the part that stands out the most. Also, you can see the distribution of attention is it concentrated or scattered.</blockquote><aside class="block-color-default_background callout" data-notion-callout="" data-notion-callout-background="default_background" style="white-space:pre-wrap;display:flex" id="39ffef90-89b9-80b4-b78f-c49d7fd1aee3" dir="ltr"><div style="width:100%"><h4 id="38dfef90-89b9-803d-8535-d5afec74a09a" class="" dir="auto"><mark class="highlight-default" data-notion-highlight="default">Heat Map 🔥</mark></h4><p id="38dfef90-89b9-8082-81a0-e18d90a0465a" class="" dir="auto"><mark class="highlight-default" data-notion-highlight="default">Shows areas of high and low engagement using color gradients (red = high, blue = low). Used to analyze clicks, scrolling, and user interactions.</mark></p><h4 id="38dfef90-89b9-8066-a51c-f0ae6ee8c0a2" class="" dir="auto"><mark class="highlight-default" data-notion-highlight="default">Focus Map 🎯</mark></h4><p id="38dfef90-89b9-800d-93a1-f9ebc18c0101" class="" dir="auto"><mark class="highlight-default" data-notion-highlight="default">Highlights which parts of a screen grab attention within the first few seconds. Helps ensure essential content is immediately noticeable.</mark></p><h4 id="38dfef90-89b9-806d-82ee-d3411ca33d57" class="" dir="auto"><mark class="highlight-default" data-notion-highlight="default">Contrast Map 🎨</mark></h4><p id="38dfef90-89b9-80fc-853c-c5cbfa4a5668" class="" dir="auto"><mark class="highlight-default" data-notion-highlight="default">Measures brightness and color differences to improve readability and accessibility. Ensures key elements stand out for all users, including those with visual impairments.</mark></p><figure id="39ffef90-89b9-8054-a33b-e4de5c5249de" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/f7e17cd1-ce87-4fc6-90f4-daf7d1914e57.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/f7e17cd1-ce87-4fc6-90f4-daf7d1914e57.png"><img style="width:672px" src="Meds%20Reminder%20UX%20Case%20Study/f7e17cd1-ce87-4fc6-90f4-daf7d1914e57.png"/></a></figure></div></aside><p id="38dfef90-89b9-8014-9cfe-fb1986cd3f9e" class="" dir="auto">‎</p><h2 id="38dfef90-89b9-80ba-ba88-c109992e442a" class="" dir="auto">🚀 Marketing campaign &amp; Comms</h2><aside class="block-color-default_background callout" data-notion-callout="" data-notion-callout-background="default_background" style="white-space:pre-wrap;display:flex" id="39ffef90-89b9-808d-839d-c025d32b068c" dir="ltr"><div style="width:100%"><p id="38dfef90-89b9-8003-ad90-c3239a7baf58" class="" dir="auto">Effective communication is key to engaging users, driving conversions, and building brand trust. We created marketing communications to educate, inform, and re-engage users, ensuring they stay connected with our product, explore new features, and maximize value. 🚀</p><figure id="39ffef90-89b9-80c9-9294-ce7b3b58e011" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/image%2027.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/image%2027.png"><img style="width:3970px" src="Meds%20Reminder%20UX%20Case%20Study/image%2027.png"/></a></figure></div></aside><h2 id="38dfef90-89b9-805e-9c15-e19834630311" class="" dir="auto">Widget &amp; Store Preview image 🖼️</h2><aside class="block-color-default_background callout" data-notion-callout="" data-notion-callout-background="default_background" style="white-space:pre-wrap;display:flex" id="3a0fef90-89b9-8007-8d19-e4b99bc453f0" dir="ltr"><div style="width:100%"><p id="38dfef90-89b9-808a-b297-e28b38dddb53" class="" dir="auto">Stay on track effortlessly! The new home screen widget offers quick access to upcoming <strong>medication reminders widget</strong>, ensuring you never miss a dose. 🚀 The updated 🖼️ app store preview images showcase seamless reminder setup, ⏰ personalized alerts, and a user-friendly interface, making it easier for users to see the app’s value at a glance.</p><figure id="39ffef90-89b9-8085-91e6-cc26318c68c3" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/image%2028.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/image%2028.png"><img style="width:5432px" src="Meds%20Reminder%20UX%20Case%20Study/image%2028.png"/></a></figure></div></aside><h2 id="38dfef90-89b9-8018-b122-e1b2c8059ebf" class="" dir="auto">🆘 Support Page &amp; FAQs 📖</h2><aside class="block-color-default_background callout" data-notion-callout="" data-notion-callout-background="default_background" style="white-space:pre-wrap;display:flex" id="3a0fef90-89b9-802d-ab32-e7726875659d" dir="ltr"><div style="width:100%"><p id="38dfef90-89b9-80c8-b398-d63087ed0dba" class="" dir="auto">A comprehensive support page to guide users on setting up and configuring reminders, along with answers to frequently asked questions.</p><figure id="39ffef90-89b9-8021-9935-d97302082113" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/db144d50-8a99-4f8d-b807-4e322aa52f86.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/db144d50-8a99-4f8d-b807-4e322aa52f86.png"><img style="width:672px" src="Meds%20Reminder%20UX%20Case%20Study/db144d50-8a99-4f8d-b807-4e322aa52f86.png"/></a></figure></div></aside><p id="39ffef90-89b9-8001-9a3b-c14e776b249b" class="" dir="auto">
+</p><h2 id="38dfef90-89b9-80d7-b1eb-f99b141f7363" class="" dir="auto">Final Outcome 🚀</h2><aside class="block-color-default_background callout" data-notion-callout="" data-notion-callout-background="default_background" style="white-space:pre-wrap;display:flex" id="3a0fef90-89b9-805c-962e-cb92f823765f" dir="ltr"><div style="width:100%"><p id="38dfef90-89b9-8049-83af-e4bcf2b624a7" class="" dir="auto">Post-launch data showed 📈 increased <strong>medication adherence, 🔄 high retention rates</strong>, and ⭐ positive user feedback, highlighting its effectiveness. 📅 Weekly metric tracking helped identify any drops in <strong>adherence, retention, or user activity,</strong> enabling 🚀 continuous optimizations for better performance.</p><table id="38dfef90-89b9-80f8-835f-da848666d70a" class="simple-table" dir="ltr"><thead class="simple-table-header"><tr id="38dfef90-89b9-807f-999e-e4940470e165" dir="ltr"><th id="]@=S" class="simple-table-header-color simple-table-header">Metric</th><th id="=m]w" class="simple-table-header-color simple-table-header" style="width:456px">Outcome</th></tr></thead><tbody><tr id="38dfef90-89b9-8077-8a4e-d0a7f082a1c6" dir="ltr"><td id="]@=S" class="">Medication Adherence Increase</td><td id="=m]w" class="" style="width:456px">📈 30% improvement post-launch</td></tr><tr id="38dfef90-89b9-8034-82a4-c09e90400666" dir="ltr"><td id="]@=S" class="">Daily Active User Rate</td><td id="=m]w" class="" style="width:456px">🔥 55% of users engage daily</td></tr><tr id="38dfef90-89b9-80b4-939d-d8a26e013510" dir="ltr"><td id="]@=S" class="">Retention Rate (30 Days)</td><td id="=m]w" class="" style="width:456px">🔄 75% of users retained</td></tr><tr id="38dfef90-89b9-8010-bce5-e4866c5394ad" dir="ltr"><td id="]@=S" class="">Onboarding Completion Rate</td><td id="=m]w" class="" style="width:456px">✅ 95% of users complete onboarding</td></tr><tr id="38dfef90-89b9-80c0-bb5b-cda1e365ebb3" dir="ltr"><td id="]@=S" class="">User Feedback</td><td id="=m]w" class="" style="width:456px">👍 Overwhelmingly positive, praised for simplicity and usability</td></tr></tbody></table><figure id="39ffef90-89b9-802a-8448-f68eb5b8a5d5" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/image%2029.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/image%2029.png"><img style="width:4738px" src="Meds%20Reminder%20UX%20Case%20Study/image%2029.png"/></a></figure></div></aside><h2 id="38dfef90-89b9-80a9-ae93-f18b87b8980d" class="" dir="auto">Post MVP Hurdels and Gamification 🎯</h2><aside class="block-color-default_background callout" data-notion-callout="" data-notion-callout-background="default_background" style="white-space:pre-wrap;display:flex" id="3a0fef90-89b9-80e3-99f1-e8a8e8fa780a" dir="ltr"><div style="width:100%"><p id="38dfef90-89b9-8051-8960-eacf67a47f58" class="" dir="auto">After the successful launch of the MVP (basic medication reminder system), user feedback highlighted the need for better engagement, motivation, and deeper adherence insights. To address this, <strong>streak-based gamification</strong> and <strong>adherence reports</strong> were introduced.</p><h4 id="38dfef90-89b9-807d-86d5-cb380ec3895e" class="" dir="auto">Challenges Identified Post-MVP 🔥</h4><ol type="1" id="38dfef90-89b9-8020-a74c-f0b58b9d8340" class="numbered-list" start="1" dir="auto"><li><strong>Drop in Long-Term Engagement</strong> – Users initially responded well to reminders but lost motivation over time.</li></ol><ol type="1" id="38dfef90-89b9-80a3-a119-d2c3b942f669" class="numbered-list" start="2" dir="auto"><li><strong>Lack of Self-Tracking</strong> – Users wanted to see their progress beyond daily reminders.</li></ol><ol type="1" id="38dfef90-89b9-8031-ab13-fa4ac91fde91" class="numbered-list" start="3" dir="auto"><li><strong>Limited Caregiver Involvement</strong> – Caregivers needed better ways to monitor adherence trends.</li></ol><figure id="39ffef90-89b9-80d1-8b49-f83976139ff8" class="image" data-notion-image="Meds%20Reminder%20UX%20Case%20Study/image%2030.png" dir="ltr"><a href="Meds%20Reminder%20UX%20Case%20Study/image%2030.png"><img style="width:4688px" src="Meds%20Reminder%20UX%20Case%20Study/image%2030.png"/></a></figure></div></aside><p id="38dfef90-89b9-8030-84d5-d3e0cfc3324b" class="" dir="auto">‎</p><aside class="block-color-default_background callout" data-notion-callout="" data-notion-callout-background="default_background" style="white-space:pre-wrap;display:flex" id="3a0fef90-89b9-809c-adbb-d591c9a4cbb6" dir="ltr"><div style="width:100%"><h2 id="38dfef90-89b9-8039-8119-d5de4a0edcff" class="" dir="auto">Learnings and Reflections</h2><ul id="38dfef90-89b9-80e7-8b6b-e78127eb0835" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>Balancing Functionality with Simplicity</strong> – Ensured even complex features remained intuitive and accessible.</li></ul><ul id="38dfef90-89b9-8092-bd4b-d289e66e8178" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>User-Centric Design</strong> – Prioritized real user feedback to refine features and improve engagement.</li></ul><ul id="38dfef90-89b9-8054-b6c3-cc2e9c239561" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>Iterative Approach</strong> – Frequent testing and iterations led to a smoother user experience.</li></ul><ul id="38dfef90-89b9-80ef-ad5a-dc3fb6fcb06c" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>Data-Driven Insights Matter </strong>– Adherence reports empowered users and caregivers with actionable health data.</li></ul><h3 id="38dfef90-89b9-80a5-9ef7-cde40019ee17" class="" dir="auto"><strong>✅  Future Roadmap:</strong></h3><p id="38dfef90-89b9-805a-a552-ebc3f68ed83b" class="" dir="auto"><strong>Wearable Integration</strong> – Effortless tracking through smartwatches.</p><p id="38dfef90-89b9-8055-80d2-df1998fee01f" class="" dir="auto"><strong>AI-Powered Scheduling</strong> – Smart reminders based on user behavior and predictive adherence solutions for proactive healthcare!</p></div></aside></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
